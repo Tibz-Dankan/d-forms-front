@@ -6,10 +6,11 @@ import {
   Navigate,
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Notification } from "./UI/Notifiication";
+import { Notification } from "./UI/shared/Notifiication";
 import { hideCardNotification } from "./store/actions/notification";
 import { TNotificationState } from "./types/notification";
 import "./App.css";
+import { Section1 } from "./pages/employment/Section1";
 
 const App: React.FC = () => {
   const dispatch: any = useDispatch();
@@ -29,7 +30,7 @@ const App: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className="bg-gray-50">
       <Router>
         <Fragment>
           {notification.showCardNotification && (
@@ -40,12 +41,7 @@ const App: React.FC = () => {
             />
           )}
           <Routes>
-            <Route
-              path="/"
-              element={
-                <div className="text-gray-100 bg-primary">D-forms app</div>
-              }
-            />
+            <Route path="/" element={<Section1 />} />
             <Route path="/" element={<Navigate to="/" replace />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
