@@ -15,7 +15,9 @@ const App: React.FC = () => {
           <Routes>
             <Route
               path="/"
-              element={<div className="text-pink-400">D-forms app</div>}
+              element={
+                <div className="text-gray-100 bg-primary">D-forms app</div>
+              }
             />
             <Route path="/" element={<Navigate to="/" replace />} />
             <Route path="*" element={<Navigate to="/" replace />} />
