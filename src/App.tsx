@@ -10,7 +10,8 @@ import { Notification } from "./UI/shared/Notifiication";
 import { hideCardNotification } from "./store/actions/notification";
 import { TNotificationState } from "./types/notification";
 import "./App.css";
-import { Section1 } from "./pages/employment/Section1";
+// import { Section1 } from "./pages/employment/Section1";
+import { EmploymentRouteController } from "./pages/employment/EmploymentRouteController";
 
 const App: React.FC = () => {
   const dispatch: any = useDispatch();
@@ -41,8 +42,11 @@ const App: React.FC = () => {
             />
           )}
           <Routes>
-            <Route path="/" element={<Section1 />} />
-            <Route path="/" element={<Navigate to="/" replace />} />
+            <Route path="/" element={<div>Home Page here</div>} />
+            <Route
+              path="/employment/*"
+              element={<EmploymentRouteController />}
+            />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Fragment>

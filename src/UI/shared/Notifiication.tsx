@@ -76,7 +76,7 @@ export const Notification: React.FC<NotificationProps> = (props) => {
     <div
       className={`fixed top-5  right-5  z-[10000] 
       flex w-72 animate-opacityZeroToFull items-center
-      justify-center gap-2 rounded ${bgColor} 
+      justify-start gap-2 rounded ${bgColor} 
       rounded p-3 shadow-lg`}
     >
       <span className="absolute right-1 top-1 cursor-pointer" onClick={onClose}>
@@ -84,7 +84,7 @@ export const Notification: React.FC<NotificationProps> = (props) => {
           <IoClose />
         </NotificationIcon>
       </span>
-      <div className="bg-blue-500s">{icon}</div>
+      <div>{icon}</div>
       <div>
         <span className="text-sm  leading-[4px] text-[#fff]">{message}</span>
       </div>
