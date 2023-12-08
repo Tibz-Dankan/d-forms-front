@@ -9,10 +9,11 @@ import {
 import { useDispatch } from "react-redux";
 import { IconContext } from "react-icons";
 import { IoIosArrowRoundBack, IoIosArrowRoundForward } from "react-icons/io";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { transformToArrayOfObjects } from "../../utils/transformToArrayOfObject";
+import { useNavigate } from "react-router-dom";
 
-export const Section1: React.FC = () => {
+export const Section2: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams({
     page: "",
     section: "",
@@ -88,13 +89,23 @@ export const Section1: React.FC = () => {
     delete formik.errors?.relativeWorkSection;
     delete formik.errors?.hasValidDriverLicense;
 
+    // const errors: any[] = Object.keys(formik.errors);
     const errors: any[] = transformToArrayOfObjects(formik.errors);
 
+    console.log("errors array", errors);
+
     errors?.map((error) => {
+      console.log("error", error);
       const key = extractItemKey(error);
       console.log("key", key);
       if (error[key]) {
-        dispatch(showCardNotification({ type: "error", message: error[key] }));
+        dispatch(
+          showCardNotification({
+            type: "error",
+            // message: "Please check form for errors",
+            message: error[key],
+          })
+        );
         setTimeout(() => {
           dispatch(hideCardNotification());
         }, 5000);
@@ -102,28 +113,6 @@ export const Section1: React.FC = () => {
       }
     });
 
-    // check for empty field values
-    if (
-      !formik.values.announcementNumber ||
-      !formik.values.positionTitle ||
-      !formik.values.lastName ||
-      !formik.values.firstName ||
-      !formik.values.otherName ||
-      !formik.values.address ||
-      !formik.values.email ||
-      !formik.values.telephoneNumber
-    ) {
-      dispatch(
-        showCardNotification({
-          type: "error",
-          message: "Check form for errors",
-        })
-      );
-      setTimeout(() => {
-        dispatch(hideCardNotification());
-      }, 5000);
-      hasError = true;
-    }
     return hasError;
   };
 
@@ -131,8 +120,8 @@ export const Section1: React.FC = () => {
     const setDefaultSearchParams = () => {
       setSearchParams(
         (prev) => {
-          prev.set("page", "1");
-          prev.set("section", "1");
+          prev.set("page", "2");
+          prev.set("section", "2");
           return prev;
         },
         { replace: true }
@@ -149,8 +138,6 @@ export const Section1: React.FC = () => {
     if (formHasErrors()) return;
     const nextPage = parseInt(page) + 1;
     const nextSection = parseInt(section) + 1;
-    console.log("nextPage", nextPage);
-    console.log("nextSection", nextSection);
 
     setSearchParams(
       (prev) => {
@@ -187,70 +174,14 @@ export const Section1: React.FC = () => {
           header={
             "EMPLOYMENT APPLICATION FOR LOCALLY EMPLOYED STAFF OR FAMILY MEMBER"
           }
-          section="section 1"
+          section="section 2"
           footer="Employment footer"
         >
           <form className="w-full">
-            {/* Position */}
-            <div className="bg-gray-400 px-4 py-1 rounded mb-4">
-              <p className="text-gray-800 font-semibold text-lgs uppercase">
-                Position
-              </p>
-            </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div
-                className="relative pt-4 flex flex-col items-start 
-                 justify-center gap-1"
-              >
-                {formik.errors.announcementNumber &&
-                  formik.touched.announcementNumber && (
-                    <p className="absolute top-0 left-0 text-sm text-red-600">
-                      {formik.errors.announcementNumber}
-                    </p>
-                  )}
-                <label className="text-sm">Vacancy Announcement Number</label>
-                <input
-                  type="text"
-                  required
-                  id="announcementNumber"
-                  name="announcementNumber"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.announcementNumber}
-                  className="p-2 outline-none rounded border-[2px]
-                  border-gray-500 focus:border-[2px] focus:border-primaryLight
-                  transition-all text-sm w-full"
-                />
-              </div>
-              <div
-                className="relative pt-4 flex flex-col items-start 
-                 justify-center gap-1"
-              >
-                {formik.errors.positionTitle &&
-                  formik.touched.positionTitle && (
-                    <p className="absolute top-0 left-0 text-sm text-red-600">
-                      {formik.errors.positionTitle}
-                    </p>
-                  )}
-                <label className="text-sm">Position Title</label>
-                <input
-                  type="text"
-                  required
-                  id="positionTitle"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.positionTitle}
-                  className="p-2 outline-none rounded border-[2px]
-                  border-gray-500 focus:border-[2px] focus:border-primaryLight
-                  transition-all text-sm w-full"
-                />
-              </div>
-            </div>
-            {/* Personal information */}
+            {/* Personal Eduaction */}
             <div className="bg-gray-400 px-4 py-1 rounded mb-4 mt-8">
               <p className="text-gray-800 font-semibold text-lgs uppercase">
-                SECTION 1: PERSONAL INFORMATION TO BE COMPLETED BY ALL
-                APPLICANTS
+                SECTION 2: EDUCATION
               </p>
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 ">

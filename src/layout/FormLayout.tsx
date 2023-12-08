@@ -1,5 +1,6 @@
 import React, { Fragment, ReactNode } from "react";
 // import { Progressbar } from "../UI/shared/Progressbar";
+import { Header } from "./Header";
 
 interface FormLayoutProps {
   header: ReactNode;
@@ -9,15 +10,26 @@ interface FormLayoutProps {
 }
 
 export const FormLayout: React.FC<FormLayoutProps> = (props) => {
+  // TODO: To calculate the progress percentage
   return (
     <Fragment>
       <div
         className="flex flex-col items-center justify-center
-        bg-green-500s min-h-[100vh] h-auto w-[80vh] md:w-[700px]
+        bg-green-500s min-h-[100vh] h-auto w-[90%] md:w-[700px]
         gap-16 text-gray-800"
       >
         {/* header section */}
-        <div>{props.header}</div>
+        <div className="w-full h-auto">
+          <div className="mt-[340px] sm:mt-52">
+            <Header />
+          </div>
+          <div
+            className="text-gray-200 bg-secondary p-4 font-bold 
+          text-center rounded text-xl"
+          >
+            {props.header}
+          </div>
+        </div>
         {/* Progress section */}
         <div className="w-full space-y-2">
           <div
@@ -39,7 +51,7 @@ export const FormLayout: React.FC<FormLayoutProps> = (props) => {
           {/* <Progressbar completed={60} /> */}
         </div>
         {/* main content section */}
-        <div>{props.children}</div>
+        <div className="w-full">{props.children}</div>
         {/* footer section */}
         <div>{props.footer}</div>
       </div>
