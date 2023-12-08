@@ -126,12 +126,44 @@ export const Section2: React.FC = () => {
         },
         { replace: true }
       );
+      currentMaxPageHandler();
     };
     setDefaultSearchParams();
   }, []);
 
   const page = searchParams.get("page");
   const section = searchParams.get("section");
+  const currentMaxPage = searchParams.get("currMaxPage");
+
+  function currentMaxPageHandler() {
+    // cater if curr max is defined
+    if (!currentMaxPage) {
+      setSearchParams(
+        (prev) => {
+          // prev.set("currMaxPage", `${page}`);
+          prev.set("currMaxPage", "2");
+          return prev;
+        },
+        { replace: true }
+      );
+      return;
+    }
+
+    if (!page || !currentMaxPage) return;
+
+    const currPage = parseInt(page);
+    const currMaxPage = parseInt(currentMaxPage);
+    if (currPage === currMaxPage || currPage < currMaxPage) return;
+
+    const nextMaxPage = parseInt(page) + 1;
+    setSearchParams(
+      (prev) => {
+        prev.set("currMaxPage", `${nextMaxPage}`);
+        return prev;
+      },
+      { replace: true }
+    );
+  }
 
   const nextPageHandler = () => {
     if (!page || !section) return;
@@ -147,6 +179,7 @@ export const Section2: React.FC = () => {
       },
       { replace: true }
     );
+    currentMaxPageHandler();
     navigate(`/employment/section${nextPage}`, { replace: false });
   };
 
@@ -176,6 +209,7 @@ export const Section2: React.FC = () => {
           }
           section="section 2"
           footer="Employment footer"
+          totalNumPages={6}
         >
           <form className="w-full">
             {/* Personal Eduaction */}

@@ -1,5 +1,6 @@
 import React, { Fragment, ReactNode } from "react";
-// import { Progressbar } from "../UI/shared/Progressbar";
+import { useSearchParams } from "react-router-dom";
+import { Progressbar } from "../UI/shared/Progressbar";
 import { Header } from "./Header";
 
 interface FormLayoutProps {
@@ -7,9 +8,26 @@ interface FormLayoutProps {
   children: ReactNode;
   footer: ReactNode;
   section: string;
+  totalNumPages: number;
 }
 
 export const FormLayout: React.FC<FormLayoutProps> = (props) => {
+  const [searchParams, _] = useSearchParams({
+    page: "",
+    section: "",
+  });
+  const currMaxPage = searchParams.get("currMaxPage");
+  console.log("currMaxPage", currMaxPage);
+
+  const progressPercentage = (): any => {
+    if (!currMaxPage) return;
+    const currentPage = parseInt(currMaxPage);
+    const totalPages = props.totalNumPages;
+    const percentage = Math.floor(((currentPage - 1) / totalPages) * 100);
+    console.log("Progress", percentage + " %");
+    return percentage;
+  };
+
   // TODO: To calculate the progress percentage
   return (
     <Fragment>
@@ -32,23 +50,22 @@ export const FormLayout: React.FC<FormLayoutProps> = (props) => {
         </div>
         {/* Progress section */}
         <div className="w-full space-y-2">
-          <div
-            className="w-full flex items-center justify-between
-           bg-blue-500s"
-          >
-            <span className="first-letter: uppercase text-lg font-semibold">
+          <div className="w-full flex items-center justify-between">
+            <p className="first-letter: uppercase text-lg font-semibold">
               {props.section}
-            </span>
-            <span
-              className="border-[1px] border-gray-300 bg-primary
-               rounded px-4 py-2 text-gray-50"
+            </p>
+            <p
+              // className="border-[1px] border-gray-300 bg-primary
+              //  rounded px-4 py-2 text-gray-50"
+              className="border-[1px] border-gray-300 bg-gray-100
+              rounded px-4 py-2 text-gray-700 font-semibold"
             >
-              {"60"}%
-            </span>
+              <span className="mr-2">Progress:</span>
+              <span>{progressPercentage()}%</span>
+            </p>
           </div>
-          {/* temporary div, To be removed */}
-          <div className="h-[6px] w-full bg-primary rounded" />
           {/* <Progressbar completed={60} /> */}
+          <Progressbar completed={progressPercentage()} />
         </div>
         {/* main content section */}
         <div className="w-full">{props.children}</div>

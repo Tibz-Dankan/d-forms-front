@@ -137,12 +137,43 @@ export const Section1: React.FC = () => {
         },
         { replace: true }
       );
+      currentMaxPageHandler();
     };
     setDefaultSearchParams();
   }, []);
 
   const page = searchParams.get("page");
   const section = searchParams.get("section");
+  const currentMaxPage = searchParams.get("currMaxPage");
+
+  function currentMaxPageHandler() {
+    // if current max page is defined
+    if (!currentMaxPage) {
+      setSearchParams(
+        (prev) => {
+          prev.set("currMaxPage", "1");
+          return prev;
+        },
+        { replace: true }
+      );
+      return;
+    }
+
+    if (!page || !currentMaxPage) return;
+
+    const currPage = parseInt(page);
+    const currMaxPage = parseInt(currentMaxPage);
+    if (currPage === currMaxPage || currPage < currMaxPage) return;
+
+    const nextMaxPage = parseInt(page) + 1;
+    setSearchParams(
+      (prev) => {
+        prev.set("currMaxPage", `${nextMaxPage}`);
+        return prev;
+      },
+      { replace: true }
+    );
+  }
 
   const nextPageHandler = () => {
     if (!page || !section) return;
@@ -160,6 +191,7 @@ export const Section1: React.FC = () => {
       },
       { replace: true }
     );
+    currentMaxPageHandler();
     navigate(`/employment/section${nextPage}`, { replace: false });
   };
 
@@ -184,6 +216,7 @@ export const Section1: React.FC = () => {
     <Fragment>
       <div className="relative full grid place-items-center h-auto">
         <FormLayout
+          totalNumPages={6}
           header={
             "EMPLOYMENT APPLICATION FOR LOCALLY EMPLOYED STAFF OR FAMILY MEMBER"
           }
