@@ -1,10 +1,12 @@
 import React, { Fragment, ReactNode } from "react";
 import { useSearchParams } from "react-router-dom";
+import { twMerge } from "tailwind-merge";
 import { Progressbar } from "../UI/shared/Progressbar";
 import { Header } from "./Header";
 
 interface FormLayoutProps {
-  header: ReactNode;
+  headerTitle: ReactNode;
+  headerTitleClassName?: string;
   children: ReactNode;
   footer: ReactNode;
   section: string;
@@ -42,10 +44,15 @@ export const FormLayout: React.FC<FormLayoutProps> = (props) => {
             <Header />
           </div>
           <div
-            className="text-gray-200 bg-secondary p-4 font-bold 
-          text-center rounded text-xl"
+            //   className="text-gray-200 bg-secondary p-4 font-bold
+            // text-center rounded text-xl"
+            className={twMerge(
+              `text-gray-200 bg-secondary p-4 font-bold 
+             text-center rounded text-xl`,
+              props.headerTitleClassName
+            )}
           >
-            {props.header}
+            {props.headerTitle}
           </div>
         </div>
         {/* Progress section */}

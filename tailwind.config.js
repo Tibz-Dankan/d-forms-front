@@ -17,6 +17,7 @@ module.exports = withMT({
         transparent: "transparent",
         primary: "#d6336c",
         primaryLight: "#faa2c1",
+        primaryDark: "#a61e4d",
         secondary: "#1864ab",
         info: " #5BC0DE",
         warning: "#F0AD4E",
