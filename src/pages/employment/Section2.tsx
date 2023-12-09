@@ -204,7 +204,7 @@ export const Section2: React.FC = () => {
     <Fragment>
       <div className="relative full grid place-items-center h-auto">
         <FormLayout
-          header={
+          headerTitle={
             "EMPLOYMENT APPLICATION FOR LOCALLY EMPLOYED STAFF OR FAMILY MEMBER"
           }
           section="section 2"
