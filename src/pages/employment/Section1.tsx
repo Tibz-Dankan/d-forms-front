@@ -227,6 +227,12 @@ export const Section1: React.FC = () => {
       { replace: true }
     );
     currentMaxPageHandler();
+    saveFormDataToStorage({
+      applicationForm: "employment",
+      category: "personalInfo",
+      data: formik.values,
+      updateAt: new Date().toISOString(),
+    });
     navigate(`/employment/section${nextPage}`, { replace: false });
   };
 
