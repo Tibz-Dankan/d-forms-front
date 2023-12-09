@@ -69,7 +69,6 @@ export const Section1: React.FC = () => {
       category: "personalInfo",
     }) as TInitialValues;
 
-    console.log("valuesFromStorage", valuesFromStorage);
     if (!valuesFromStorage) return initialValues;
     return valuesFromStorage;
   };
@@ -145,9 +144,6 @@ export const Section1: React.FC = () => {
     });
 
     // check for empty field values
-
-    console.log("Values", formik.values);
-
     if (
       !formik.values.intake ||
       !formik.values.program ||
