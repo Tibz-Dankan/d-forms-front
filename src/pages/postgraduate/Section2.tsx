@@ -8,6 +8,7 @@ import {
 } from "../../store/actions/notification";
 import { useDispatch } from "react-redux";
 import { IconContext } from "react-icons";
+import { FaPlus } from "react-icons/fa6";
 import { IoIosArrowRoundBack, IoIosArrowRoundForward } from "react-icons/io";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { transformToArrayOfObjects } from "../../utils/transformToArrayOfObject";
@@ -437,7 +438,7 @@ export const Section2: React.FC = () => {
             </div>
             {/* ----- Disability  End----- */}
 
-            {/* ----- Applicant start  Start -----*/}
+            {/* ----- Applicant Contact  Start -----*/}
             <div className="my-2">
               <p
                 className="text-gray-50 font-semibold inline-block
@@ -446,7 +447,7 @@ export const Section2: React.FC = () => {
                 1.3: APPLICANT’S CONTACT
               </p>
             </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mt-2 mb-8">
+            <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2 mt-2 mb-8">
               <div
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
@@ -563,12 +564,530 @@ export const Section2: React.FC = () => {
                 />
               </div>
             </div>
-            {/* ----- Applicant start  End----- */}
+            {/* ----- Applicant Contact   End----- */}
 
             {/* ----- Parent/Guardian  Start -----*/}
+            <div className="my-2">
+              <p
+                className="text-gray-50 font-semibold inline-block
+                bg-primaryDark px-4 py-2 rounded"
+              >
+                1.3: PARENTS/GUARDIANS
+              </p>
+            </div>
+
+            {/* ----- Father/Legal guardian -----*/}
+            <div className="mb-2 mt-4">
+              <p
+                className="text-gray-800 font-semibold inline-block
+                bg-gray-400 px-4 py-2 rounded"
+              >
+                Father/Legal guardian
+              </p>
+            </div>
+            <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2 mt-2 mb-8">
+              <div
+                className="relative pt-4 flex flex-col items-start 
+                 justify-center gap-1"
+              >
+                {formik.errors.program && formik.touched.program && (
+                  <p className="absolute top-0 left-0 text-sm text-red-600">
+                    {formik.errors.program}
+                  </p>
+                )}
+                <label className="text-sm">Telephone number</label>
+                <input
+                  type="text"
+                  required
+                  id="program"
+                  name="program"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.program}
+                  className="p-2 outline-none rounded border-[2px]
+                  border-gray-500 focus:border-[2px] focus:border-primaryLight
+                  transition-all text-sm w-full resize-none"
+                />
+              </div>
+              <div
+                className="relative pt-4 flex flex-col items-start 
+                 justify-center gap-1"
+              >
+                {formik.errors.program && formik.touched.program && (
+                  <p className="absolute top-0 left-0 text-sm text-red-600">
+                    {formik.errors.program}
+                  </p>
+                )}
+                <label className="text-sm">Email</label>
+                <input
+                  type="email"
+                  required
+                  id="program"
+                  name="program"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.program}
+                  className="p-2 outline-none rounded border-[2px]
+                  border-gray-500 focus:border-[2px] focus:border-primaryLight
+                  transition-all text-sm w-full resize-none"
+                />
+              </div>
+              <div
+                className="relative pt-4 flex flex-col items-start 
+                 justify-center gap-1"
+              >
+                {formik.errors.program && formik.touched.program && (
+                  <p className="absolute top-0 left-0 text-sm text-red-600">
+                    {formik.errors.program}
+                  </p>
+                )}
+                <label className="text-sm">P.O BOX</label>
+                <input
+                  type="text"
+                  required
+                  id="program"
+                  name="program"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.program}
+                  className="p-2 outline-none rounded border-[2px]
+                  border-gray-500 focus:border-[2px] focus:border-primaryLight
+                  transition-all text-sm w-full resize-none"
+                />
+              </div>
+              <div
+                className="relative pt-4 flex flex-col items-start 
+                 justify-center gap-1"
+              >
+                {formik.errors.program && formik.touched.program && (
+                  <p className="absolute top-0 left-0 text-sm text-red-600">
+                    {formik.errors.program}
+                  </p>
+                )}
+                <label className="text-sm">Town</label>
+                <input
+                  type="text"
+                  required
+                  id="program"
+                  name="program"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.program}
+                  className="p-2 outline-none rounded border-[2px]
+                  border-gray-500 focus:border-[2px] focus:border-primaryLight
+                  transition-all text-sm w-full resize-none"
+                />
+              </div>
+              <div
+                className="relative pt-4 flex flex-col items-start 
+                 justify-center gap-1"
+              >
+                {formik.errors.program && formik.touched.program && (
+                  <p className="absolute top-0 left-0 text-sm text-red-600">
+                    {formik.errors.program}
+                  </p>
+                )}
+                <label className="text-sm">Country</label>
+                <input
+                  type="text"
+                  required
+                  id="program"
+                  name="program"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.program}
+                  className="p-2 outline-none rounded border-[2px]
+                  border-gray-500 focus:border-[2px] focus:border-primaryLight
+                  transition-all text-sm w-full resize-none"
+                />
+              </div>
+            </div>
+
+            {/* ----- Mother/Legal guardian -----*/}
+            <div className="mb-2 mt-4">
+              <p
+                className="text-gray-800 font-semibold inline-block
+                bg-gray-400 px-4 py-2 rounded"
+              >
+                Mother/Legal guardian
+              </p>
+            </div>
+            <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2 mt-2 mb-8">
+              <div
+                className="relative pt-4 flex flex-col items-start 
+                 justify-center gap-1"
+              >
+                {formik.errors.program && formik.touched.program && (
+                  <p className="absolute top-0 left-0 text-sm text-red-600">
+                    {formik.errors.program}
+                  </p>
+                )}
+                <label className="text-sm">Telephone number</label>
+                <input
+                  type="text"
+                  required
+                  id="program"
+                  name="program"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.program}
+                  className="p-2 outline-none rounded border-[2px]
+                  border-gray-500 focus:border-[2px] focus:border-primaryLight
+                  transition-all text-sm w-full resize-none"
+                />
+              </div>
+              <div
+                className="relative pt-4 flex flex-col items-start 
+                 justify-center gap-1"
+              >
+                {formik.errors.program && formik.touched.program && (
+                  <p className="absolute top-0 left-0 text-sm text-red-600">
+                    {formik.errors.program}
+                  </p>
+                )}
+                <label className="text-sm">Email</label>
+                <input
+                  type="email"
+                  required
+                  id="program"
+                  name="program"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.program}
+                  className="p-2 outline-none rounded border-[2px]
+                  border-gray-500 focus:border-[2px] focus:border-primaryLight
+                  transition-all text-sm w-full resize-none"
+                />
+              </div>
+              <div
+                className="relative pt-4 flex flex-col items-start 
+                 justify-center gap-1"
+              >
+                {formik.errors.program && formik.touched.program && (
+                  <p className="absolute top-0 left-0 text-sm text-red-600">
+                    {formik.errors.program}
+                  </p>
+                )}
+                <label className="text-sm">P.O BOX</label>
+                <input
+                  type="text"
+                  required
+                  id="program"
+                  name="program"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.program}
+                  className="p-2 outline-none rounded border-[2px]
+                  border-gray-500 focus:border-[2px] focus:border-primaryLight
+                  transition-all text-sm w-full resize-none"
+                />
+              </div>
+              <div
+                className="relative pt-4 flex flex-col items-start 
+                 justify-center gap-1"
+              >
+                {formik.errors.program && formik.touched.program && (
+                  <p className="absolute top-0 left-0 text-sm text-red-600">
+                    {formik.errors.program}
+                  </p>
+                )}
+                <label className="text-sm">Town</label>
+                <input
+                  type="text"
+                  required
+                  id="program"
+                  name="program"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.program}
+                  className="p-2 outline-none rounded border-[2px]
+                  border-gray-500 focus:border-[2px] focus:border-primaryLight
+                  transition-all text-sm w-full resize-none"
+                />
+              </div>
+              <div
+                className="relative pt-4 flex flex-col items-start 
+                 justify-center gap-1"
+              >
+                {formik.errors.program && formik.touched.program && (
+                  <p className="absolute top-0 left-0 text-sm text-red-600">
+                    {formik.errors.program}
+                  </p>
+                )}
+                <label className="text-sm">Country</label>
+                <input
+                  type="text"
+                  required
+                  id="program"
+                  name="program"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.program}
+                  className="p-2 outline-none rounded border-[2px]
+                  border-gray-500 focus:border-[2px] focus:border-primaryLight
+                  transition-all text-sm w-full resize-none"
+                />
+              </div>
+            </div>
+            {/* ----- Sponsor (if applicable) -----*/}
+            <div className="mb-2 mt-4">
+              <p
+                className="text-gray-800 font-semibold inline-block
+                bg-gray-400 px-4 py-2 rounded"
+              >
+                Sponsor (if applicable)
+              </p>
+            </div>
+            <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2 mt-2 mb-8">
+              <div
+                className="relative pt-4 flex flex-col items-start 
+                 justify-center gap-1"
+              >
+                {formik.errors.program && formik.touched.program && (
+                  <p className="absolute top-0 left-0 text-sm text-red-600">
+                    {formik.errors.program}
+                  </p>
+                )}
+                <label className="text-sm">Telephone number</label>
+                <input
+                  type="text"
+                  // required
+                  id="program"
+                  name="program"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.program}
+                  className="p-2 outline-none rounded border-[2px]
+                  border-gray-500 focus:border-[2px] focus:border-primaryLight
+                  transition-all text-sm w-full resize-none"
+                />
+              </div>
+              <div
+                className="relative pt-4 flex flex-col items-start 
+                 justify-center gap-1"
+              >
+                {formik.errors.program && formik.touched.program && (
+                  <p className="absolute top-0 left-0 text-sm text-red-600">
+                    {formik.errors.program}
+                  </p>
+                )}
+                <label className="text-sm">Email</label>
+                <input
+                  type="email"
+                  // required
+                  id="program"
+                  name="program"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.program}
+                  className="p-2 outline-none rounded border-[2px]
+                  border-gray-500 focus:border-[2px] focus:border-primaryLight
+                  transition-all text-sm w-full resize-none"
+                />
+              </div>
+              <div
+                className="relative pt-4 flex flex-col items-start 
+                 justify-center gap-1"
+              >
+                {formik.errors.program && formik.touched.program && (
+                  <p className="absolute top-0 left-0 text-sm text-red-600">
+                    {formik.errors.program}
+                  </p>
+                )}
+                <label className="text-sm">P.O BOX</label>
+                <input
+                  type="text"
+                  // required
+                  id="program"
+                  name="program"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.program}
+                  className="p-2 outline-none rounded border-[2px]
+                  border-gray-500 focus:border-[2px] focus:border-primaryLight
+                  transition-all text-sm w-full resize-none"
+                />
+              </div>
+              <div
+                className="relative pt-4 flex flex-col items-start 
+                 justify-center gap-1"
+              >
+                {formik.errors.program && formik.touched.program && (
+                  <p className="absolute top-0 left-0 text-sm text-red-600">
+                    {formik.errors.program}
+                  </p>
+                )}
+                <label className="text-sm">Town</label>
+                <input
+                  type="text"
+                  // required
+                  id="program"
+                  name="program"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.program}
+                  className="p-2 outline-none rounded border-[2px]
+                  border-gray-500 focus:border-[2px] focus:border-primaryLight
+                  transition-all text-sm w-full resize-none"
+                />
+              </div>
+              <div
+                className="relative pt-4 flex flex-col items-start 
+                 justify-center gap-1"
+              >
+                {formik.errors.program && formik.touched.program && (
+                  <p className="absolute top-0 left-0 text-sm text-red-600">
+                    {formik.errors.program}
+                  </p>
+                )}
+                <label className="text-sm">Country</label>
+                <input
+                  type="text"
+                  // required
+                  id="program"
+                  name="program"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.program}
+                  className="p-2 outline-none rounded border-[2px]
+                  border-gray-500 focus:border-[2px] focus:border-primaryLight
+                  transition-all text-sm w-full resize-none"
+                />
+              </div>
+            </div>
             {/* ----- Parent/Guardian  End -----*/}
 
             {/* ----- Employment Record Start -----*/}
+            <div className="my-2">
+              <p
+                className="text-gray-50 font-semibold inline-block
+                bg-primaryDark px-4 py-2 rounded"
+              >
+                1.4: EMPLOYMENT RECORD
+              </p>
+            </div>
+
+            {
+              // Use a map to
+            }
+            <div className="my-2">
+              <p
+                className="text-gray-800 font-semibold inline-block
+                 px-4 py-2 rounded bg-gray-400"
+              >
+                Employer 1
+              </p>
+            </div>
+            <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2 mt-2 mb-8">
+              <div
+                className="relative pt-4 flex flex-col items-start 
+                 justify-center gap-1"
+              >
+                {formik.errors.program && formik.touched.program && (
+                  <p className="absolute top-0 left-0 text-sm text-red-600">
+                    {formik.errors.program}
+                  </p>
+                )}
+                <label className="text-sm">Name and address of employer</label>
+                <input
+                  type="text"
+                  required
+                  id="program"
+                  name="program"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.program}
+                  className="p-2 outline-none rounded border-[2px]
+                  border-gray-500 focus:border-[2px] focus:border-primaryLight
+                  transition-all text-sm w-full resize-none"
+                />
+              </div>
+              <div
+                className="relative pt-4 flex flex-col items-start 
+                 justify-center gap-1"
+              >
+                {formik.errors.program && formik.touched.program && (
+                  <p className="absolute top-0 left-0 text-sm text-red-600">
+                    {formik.errors.program}
+                  </p>
+                )}
+                <label className="text-sm">Designation</label>
+                <input
+                  type="text"
+                  // required
+                  id="program"
+                  name="program"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.program}
+                  className="p-2 outline-none rounded border-[2px]
+                  border-gray-500 focus:border-[2px] focus:border-primaryLight
+                  transition-all text-sm w-full resize-none"
+                />
+              </div>
+              <div
+                className="relative pt-4 flex flex-col items-start 
+                 justify-center gap-1"
+              >
+                {formik.errors.program && formik.touched.program && (
+                  <p className="absolute top-0 left-0 text-sm text-red-600">
+                    {formik.errors.program}
+                  </p>
+                )}
+                <label className="text-sm">From</label>
+                <input
+                  type="date"
+                  // required
+                  id="program"
+                  name="program"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.program}
+                  className="p-2 outline-none rounded border-[2px]
+                  border-gray-500 focus:border-[2px] focus:border-primaryLight
+                  transition-all text-sm w-full resize-none"
+                />
+              </div>
+              <div
+                className="relative pt-4 flex flex-col items-start 
+                 justify-center gap-1"
+              >
+                {formik.errors.program && formik.touched.program && (
+                  <p className="absolute top-0 left-0 text-sm text-red-600">
+                    {formik.errors.program}
+                  </p>
+                )}
+                <label className="text-sm">To</label>
+                <input
+                  type="date"
+                  // required
+                  id="program"
+                  name="program"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.program}
+                  className="p-2 outline-none rounded border-[2px]
+                  border-gray-500 focus:border-[2px] focus:border-primaryLight
+                  transition-all text-sm w-full resize-none"
+                />
+              </div>
+              <button
+                className="bg-gray-300 flex items-center justify-center px-4 
+                 py-2 rounded mt-4 gap-4 text-primary"
+              >
+                <span>
+                  <IconContext.Provider
+                    value={{
+                      size: "1rem",
+                      color: "#d6336c",
+                    }}
+                  >
+                    <FaPlus />
+                  </IconContext.Provider>
+                </span>
+                <span>Add </span>
+              </button>
+            </div>
             {/* ----- Employment Record End -----*/}
 
             {/*----- Page Navigate buttons Start -----*/}
