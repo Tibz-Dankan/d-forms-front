@@ -17,7 +17,7 @@ export const saveFormDataToStorage = (props: Props) => {
   const storageData = localStorage.getItem(props.applicationForm);
 
   const applicationFormData =
-    storageData && (JSON.parse(storageData).applicationForm as StorageData);
+    storageData && (JSON.parse(storageData) as StorageData);
 
   //When storage is empty
   if (!applicationFormData) {
