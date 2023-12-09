@@ -11,6 +11,25 @@ import { IconContext } from "react-icons";
 import { IoIosArrowRoundBack, IoIosArrowRoundForward } from "react-icons/io";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { transformToArrayOfObjects } from "../../utils/transformToArrayOfObject";
+import {
+  saveFormDataToStorage,
+  getDataFromStorage,
+} from "../../utils/saveFormDataToStorage";
+
+type TInitialValues = {
+  announcementNumber: string;
+  positionTitle: string;
+  lastName: string;
+  firstName: string;
+  otherName: string;
+  address: string;
+  email: string;
+  telephoneNumber: string;
+  doesRelativeWorkInEmbassy: string;
+  relativeName: string;
+  relativeWorkSection: string;
+  hasValidDriverLicense: string;
+};
 
 export const Section1: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams({
@@ -20,21 +39,32 @@ export const Section1: React.FC = () => {
   const dispatch: any = useDispatch();
   const navigate: any = useNavigate();
 
+  const initialValues: TInitialValues = {
+    announcementNumber: "",
+    positionTitle: "",
+    lastName: "",
+    firstName: "",
+    otherName: "",
+    address: "",
+    email: "",
+    telephoneNumber: "",
+    doesRelativeWorkInEmbassy: "",
+    relativeName: "",
+    relativeWorkSection: "",
+    hasValidDriverLicense: "",
+  };
+
+  const getInitialValues = (): TInitialValues => {
+    const valuesFromStorage = getDataFromStorage({
+      applicationForm: "employment",
+      category: "personalInfo",
+    }) as TInitialValues;
+    if (!valuesFromStorage) return initialValues;
+    return valuesFromStorage;
+  };
+
   const formik = useFormik({
-    initialValues: {
-      announcementNumber: "",
-      positionTitle: "",
-      lastName: "",
-      firstName: "",
-      otherName: "",
-      address: "",
-      email: "",
-      telephoneNumber: "",
-      doesRelativeWorkInEmbassy: "",
-      relativeName: "",
-      relativeWorkSection: "",
-      hasValidDriverLicense: "",
-    },
+    initialValues: getInitialValues(),
     validationSchema: Yup.object({
       announcementNumber: Yup.string()
         .max(255)
@@ -62,8 +92,13 @@ export const Section1: React.FC = () => {
     onSubmit: async (values, helpers) => {
       console.log("Submit values", values);
       try {
-        // dispatch form values to the global store
-        // TODO: local storage to persist data (later)
+        // Save Personal Information
+        saveFormDataToStorage({
+          applicationForm: "employment",
+          category: "personalInfo",
+          data: values,
+          updateAt: new Date().toISOString(),
+        });
       } catch (err: any) {
         helpers.setStatus({ success: false });
         // helpers.setErrors({ submit: err.message });
@@ -223,7 +258,7 @@ export const Section1: React.FC = () => {
           section="section 1"
           footer="Employment footer"
         >
-          <form className="w-full">
+          <form className="w-full" onSubmit={formik.handleSubmit}>
             {/* Position */}
             <div className="bg-gray-400 px-4 py-1 rounded mb-4">
               <p className="text-gray-800 font-semibold text-lgs uppercase">
@@ -566,6 +601,7 @@ export const Section1: React.FC = () => {
                 className="flex items-center justify-center bg-primary
                 rounded-md gap-2 px-4 py-2 text-gray-50"
                 onClick={() => nextPageHandler()}
+                type="submit"
               >
                 <span>Next</span>
                 <span>
