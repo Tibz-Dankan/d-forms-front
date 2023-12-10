@@ -1,4 +1,10 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, {
+  Fragment,
+  useEffect,
+  ChangeEvent,
+  useState,
+  useRef,
+} from "react";
 import { FormLayout } from "../../layout/FormLayout";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -16,6 +22,13 @@ import {
   saveFormDataToStorage,
   getDataFromStorage,
 } from "../../utils/saveFormDataToStorage";
+
+type Employer = {
+  nameAddress: string;
+  designation: string;
+  from: string;
+  to: string;
+};
 
 type ContactInfo = {
   contactTelephone: string;
@@ -438,6 +451,66 @@ export const Section2: React.FC = () => {
 
   const allCategoryHandler = () => {
     disabilitySubmitHandler();
+  };
+
+  const effectRan = useRef(false);
+  const [employerArray, setEmployerArray] = useState<Employer[]>([]);
+  const [focusedEmployerField, setFocusedEmployerField] = useState("");
+
+  useEffect(() => {
+    if (effectRan.current === false) {
+      const constructEmployerInitialFieldCount = () => {
+        const employer: Employer = {
+          nameAddress: "",
+          designation: "",
+          from: "",
+          to: "",
+        };
+        if (employerArray[0]) return;
+
+        for (let i = 0; i < 2; i++) {
+          setEmployerArray((employers) => [...employers, employer]);
+        }
+      };
+      constructEmployerInitialFieldCount();
+
+      return () => {
+        effectRan.current = true;
+      };
+    }
+  }, []);
+
+  // type Employer = {
+  //   nameAddress: string;
+  //   designation: string;
+  //   from: string;
+  //   to: string;
+  // };
+  type FieldName = "nameAddress" | "designation" | "from" | "to";
+
+  const employerFieldsChangeHandler = (
+    event: ChangeEvent<HTMLInputElement>,
+    fieldIndex: number,
+    fieldName: FieldName
+  ) => {
+    const value = event.target.value;
+    console.log("form value", value);
+    const mutatedEmployerArray: Employer[] = [];
+
+    employerArray.map((employer: Employer, index) => {
+      if (index === fieldIndex) {
+        employer[fieldName] = value;
+        mutatedEmployerArray.push(employer);
+        return;
+      }
+      mutatedEmployerArray.push(employer);
+    });
+    console.log("mutatedEmployerArray", mutatedEmployerArray);
+    setEmployerArray(() => mutatedEmployerArray);
+  };
+
+  const defineFocusedEmployerField = (field: string) => {
+    setFocusedEmployerField(() => field);
   };
 
   return (
@@ -1140,126 +1213,143 @@ export const Section2: React.FC = () => {
               </p>
             </div>
 
-            {
-              // Use a map to
-            }
-            <div className="my-2">
-              <p
-                className="text-gray-800 font-semibold inline-block
-                 px-4 py-2 rounded bg-gray-400"
-              >
-                Employer 1
-              </p>
-            </div>
-            <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2 mt-2 mb-8">
-              <div
-                className="relative pt-4 flex flex-col items-start 
-                 justify-center gap-1"
-              >
-                {/* {formik.errors.program && formik.touched.program && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
-                  </p>
-                )} */}
-                <label className="text-sm">Name and address of employer</label>
-                <input
-                  type="text"
-                  required
-                  id="program"
-                  name="program"
-                  onBlur={formik.handleBlur}
-                  value={""}
-                  className="p-2 outline-none rounded border-[2px]
-                  border-gray-500 focus:border-[2px] focus:border-primaryLight
-                  transition-all text-sm w-full resize-none"
-                />
-              </div>
-              <div
-                className="relative pt-4 flex flex-col items-start 
-                 justify-center gap-1"
-              >
-                {/* {formik.errors.program && formik.touched.program && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
-                  </p>
-                )} */}
-                <label className="text-sm">Designation</label>
-                <input
-                  type="text"
-                  // required
-                  id="program"
-                  name="program"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={""}
-                  className="p-2 outline-none rounded border-[2px]
-                  border-gray-500 focus:border-[2px] focus:border-primaryLight
-                  transition-all text-sm w-full resize-none"
-                />
-              </div>
-              <div
-                className="relative pt-4 flex flex-col items-start 
-                 justify-center gap-1"
-              >
-                {/* {formik.errors.program && formik.touched.program && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
-                  </p>
-                )} */}
-                <label className="text-sm">From</label>
-                <input
-                  type="date"
-                  // required
-                  id="program"
-                  name="program"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={""}
-                  className="p-2 outline-none rounded border-[2px]
-                  border-gray-500 focus:border-[2px] focus:border-primaryLight
-                  transition-all text-sm w-full resize-none"
-                />
-              </div>
-              <div
-                className="relative pt-4 flex flex-col items-start 
-                 justify-center gap-1"
-              >
-                {/* {formik.errors.program && formik.touched.program && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
-                  </p>
-                )} */}
-                <label className="text-sm">To</label>
-                <input
-                  type="date"
-                  // required
-                  id="program"
-                  name="program"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={""}
-                  className="p-2 outline-none rounded border-[2px]
-                  border-gray-500 focus:border-[2px] focus:border-primaryLight
-                  transition-all text-sm w-full resize-none"
-                />
-              </div>
-              <button
-                className="bg-gray-300 flex items-center justify-center px-4 
-                 py-2 rounded mt-4 gap-4 text-primary"
-              >
-                <span>
-                  <IconContext.Provider
-                    value={{
-                      size: "1rem",
-                      color: "#d6336c",
-                    }}
+            {employerArray.map((employer, index) => (
+              <div key={index}>
+                <div className="my-2">
+                  <p
+                    className="text-gray-800 font-semibold inline-block
+                       px-4 py-2 rounded bg-gray-400"
                   >
-                    <FaPlus />
-                  </IconContext.Provider>
-                </span>
-                <span>Add </span>
-              </button>
-            </div>
+                    Employer {index + 1}
+                  </p>
+                </div>
+                <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2 mt-2 mb-8">
+                  <div
+                    className="relative pt-4 flex flex-col items-start 
+                      justify-center gap-1"
+                  >
+                    {/* {formik.errors.program && formik.touched.program && (
+                          <p className="absolute top-0 left-0 text-sm text-red-600">
+                            {formik.errors.program}
+                          </p>
+                        )} */}
+                    <label className="text-sm">
+                      Name and address of employer
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      id={`${employer["nameAddress"]}-${index}`}
+                      name={`${employer["nameAddress"]}-${index}`}
+                      onFocus={() =>
+                        defineFocusedEmployerField(
+                          `${employer["nameAddress"]}-${index}`
+                        )
+                      }
+                      onChange={(event) =>
+                        employerFieldsChangeHandler(event, index, "nameAddress")
+                      }
+                      onBlur={() => defineFocusedEmployerField("")}
+                      value={focusedEmployerField}
+                      // value={focusedEmployerField && employer.nameAddress}
+                      className="p-2 outline-none rounded border-[2px]
+                        border-gray-500 focus:border-[2px] focus:border-primaryLight
+                        transition-all text-sm w-full resize-none"
+                    />
+                  </div>
+                  <div
+                    className="relative pt-4 flex flex-col items-start 
+                      justify-center gap-1"
+                  >
+                    {/* {formik.errors.program && formik.touched.program && (
+                          <p className="absolute top-0 left-0 text-sm text-red-600">
+                            {formik.errors.program}
+                          </p>
+                        )} */}
+                    <label className="text-sm">Designation</label>
+                    <input
+                      type="text"
+                      id={employer["designation"]}
+                      name={employer["designation"]}
+                      // onBlur={formik.handleBlur}
+                      onChange={(event) =>
+                        employerFieldsChangeHandler(event, index, "designation")
+                      }
+                      value={employer.designation}
+                      className="p-2 outline-none rounded border-[2px]
+                        border-gray-500 focus:border-[2px] focus:border-primaryLight
+                        transition-all text-sm w-full resize-none"
+                    />
+                  </div>
+                  <div
+                    className="relative pt-4 flex flex-col items-start 
+                      justify-center gap-1"
+                  >
+                    {/* {formik.errors.program && formik.touched.program && (
+                          <p className="absolute top-0 left-0 text-sm text-red-600">
+                            {formik.errors.program}
+                          </p>
+                        )} */}
+                    <label className="text-sm">From</label>
+                    <input
+                      type="date"
+                      id={employer["from"]}
+                      name={employer["from"]}
+                      onBlur={formik.handleBlur}
+                      // onChange={formik.handleChange}
+                      onChange={(event) =>
+                        employerFieldsChangeHandler(event, index, "from")
+                      }
+                      value={employer.from}
+                      className="p-2 outline-none rounded border-[2px]
+                        border-gray-500 focus:border-[2px] focus:border-primaryLight
+                        transition-all text-sm w-full resize-none"
+                    />
+                  </div>
+                  <div
+                    className="relative pt-4 flex flex-col items-start 
+                      justify-center gap-1"
+                  >
+                    {/* {formik.errors.program && formik.touched.program && (
+                          <p className="absolute top-0 left-0 text-sm text-red-600">
+                            {formik.errors.program}
+                          </p>
+                        )} */}
+                    <label className="text-sm">To</label>
+                    <input
+                      type="date"
+                      id={employer["to"]}
+                      name={employer["to"]}
+                      onBlur={formik.handleBlur}
+                      // onChange={formik.handleChange}
+                      onChange={(event) =>
+                        employerFieldsChangeHandler(event, index, "to")
+                      }
+                      value={employer.to}
+                      className="p-2 outline-none rounded border-[2px]
+                        border-gray-500 focus:border-[2px] focus:border-primaryLight
+                        transition-all text-sm w-full resize-none"
+                    />
+                  </div>
+                  <button
+                    className="bg-gray-300 flex items-center justify-center px-4 
+                       py-2 rounded mt-4 gap-4 text-primary"
+                  >
+                    <span>
+                      <IconContext.Provider
+                        value={{
+                          size: "1rem",
+                          color: "#d6336c",
+                        }}
+                      >
+                        <FaPlus />
+                      </IconContext.Provider>
+                    </span>
+                    <span>Add </span>
+                  </button>
+                </div>
+              </div>
+            ))}
             {/* ----- Employment Record End -----*/}
 
             {/*----- Page Navigate buttons Start -----*/}
