@@ -17,25 +17,41 @@ import {
   getDataFromStorage,
 } from "../../utils/saveFormDataToStorage";
 
-type TMaritalStatus = {};
-
-type TInitialValues = {
-  intake: string;
-  program: string;
-  campus: string;
-  givenname: string;
-  surname: string;
-  othername: string;
-  title: string;
-  gender: string;
-  dateOfBirth: string;
-  nationality: string;
-  countyOfResidence: string;
-  homeDistrict: string;
-  homeDiocese: string;
-  religiousAffiliation: string;
-  maritalStatus: TMaritalStatus;
+type ContactInfo = {
+  contactTelephone: string;
+  contactEmail: string;
+  contactPOBox: string;
+  contactTown: string;
+  contactCountry: string;
 };
+
+type GuardianInfo = {
+  fatherGuardianTelephone: string;
+  fatherGuardianEmail: string;
+  fatherGuardianPOBox: string;
+  fatherGuardianTown: string;
+  fatherGuardianCountry: string;
+  motherGuardianTelephone: string;
+  motherGuardianEmail: string;
+  motherGuardianPOBox: string;
+  motherGuardianTown: string;
+  motherGuardianCountry: string;
+};
+
+type SponsorInfo = {
+  sponsorTelephone: string;
+  sponsorEmail: string;
+  sponsorPOBox: string;
+  sponsorTown: string;
+  sponsorCountry: string;
+};
+
+type Disability = {
+  isDisabled?: boolean;
+  disabilityState?: string;
+};
+
+type InitialValues = ContactInfo & GuardianInfo & SponsorInfo & Disability;
 
 export const Section2: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams({
@@ -45,29 +61,80 @@ export const Section2: React.FC = () => {
   const dispatch: any = useDispatch();
   const navigate: any = useNavigate();
 
-  const initialValues: TInitialValues = {
-    intake: "",
-    program: "",
-    campus: "",
-    givenname: "",
-    surname: "",
-    othername: "",
-    title: "",
-    gender: "",
-    dateOfBirth: "",
-    nationality: "",
-    countyOfResidence: "",
-    homeDistrict: "",
-    homeDiocese: "",
-    religiousAffiliation: "",
-    maritalStatus: {},
+  // // Disability
+  // const disablity = {
+  //   isDisabled: false,
+  //   disabilities: {},
+  //   natureOfDisability: "",
+  // };
+  // // Contact
+  // const contact = {
+  //   telephone: null,
+  //   email: "",
+  //   POBox: "",
+  //   town: "",
+  //   country: "",
+  // };
+  // // Parents/Guardians
+  // const parentGuardianFather = {
+  //   telephone: null,
+  //   email: "",
+  //   POBox: "",
+  //   town: "",
+  //   country: "",
+  // };
+  // const parentGuardianMother = {
+  //   telephone: null,
+  //   email: "",
+  //   POBox: "",
+  //   town: "",
+  //   country: "",
+  // };
+  // const sponsor = {
+  //   telephone: null,
+  //   email: "",
+  //   POBox: "",
+  //   town: "",
+  //   country: "",
+  // };
+  // // employer
+  // const employer = {
+  //   nameAddress: "",
+  //   designation: "",
+  //   from: "",
+  //   to: "",
+  // };
+
+  const initialValues: InitialValues = {
+    isDisabled: false,
+    disabilityState: "",
+    contactTelephone: "",
+    contactEmail: "",
+    contactPOBox: "",
+    contactTown: "",
+    contactCountry: "",
+    fatherGuardianTelephone: "",
+    fatherGuardianEmail: "",
+    fatherGuardianPOBox: "",
+    fatherGuardianTown: "",
+    fatherGuardianCountry: "",
+    motherGuardianTelephone: "",
+    motherGuardianEmail: "",
+    motherGuardianPOBox: "",
+    motherGuardianTown: "",
+    motherGuardianCountry: "",
+    sponsorTelephone: "",
+    sponsorEmail: "",
+    sponsorPOBox: "",
+    sponsorTown: "",
+    sponsorCountry: "",
   };
 
-  const getInitialValues = (): TInitialValues => {
+  const getInitialValues = (): InitialValues => {
     const valuesFromStorage = getDataFromStorage({
       applicationForm: "postgraduate",
       category: "personalInfo",
-    }) as TInitialValues;
+    }) as InitialValues;
 
     if (!valuesFromStorage) return initialValues;
     return valuesFromStorage;
@@ -76,39 +143,49 @@ export const Section2: React.FC = () => {
   const formik = useFormik({
     initialValues: getInitialValues(),
     validationSchema: Yup.object({
-      intake: Yup.string().max(255).required("Intake number is required"),
-      program: Yup.string().max(255).required("Program is required"),
-      campus: Yup.string().max(255).required("Campus is required"),
-      givenname: Yup.string().max(255).required("Given name is required"),
-      surname: Yup.string().max(255).required("Surname is required"),
-      othername: Yup.string().max(255).required("Other name is required"),
-      title: Yup.string().max(255).required("Title is required"),
-      gender: Yup.string().max(255).required("Gender is required"),
-      dateOfBirth: Yup.string().max(50).required("Date of birth is required"),
-      nationality: Yup.string().max(50).required("Nationality is required"),
-      countyOfResidence: Yup.string()
+      // contact
+      contactTelephone: Yup.string().max(255).required("Telephone is required"),
+      contactEmail: Yup.string().max(255).required("Email is required"),
+      contactPOBox: Yup.string().max(255).required("P.O box is required"),
+      contactTown: Yup.string().max(255).required("Town is required"),
+      contactCountry: Yup.string().max(255).required("Country is required"),
+      // father/guardian
+      fatherGuardianTelephone: Yup.string()
+        .max(255)
+        .required("Telephone is required"),
+      fatherGuardianEmail: Yup.string().max(255).required("Email is required"),
+      fatherGuardianTown: Yup.string().max(255).required("Town is required"),
+      fatherGuardianCountry: Yup.string()
         .max(50)
-        .required("country of residence is required"),
-      homeDistrict: Yup.string().max(50).required("Home district  is required"),
-      homeDiocese: Yup.string().max(50).required("Home diocese  is required"),
-      religiousAffiliation: Yup.string()
+        .required("Country is required"),
+      // mother/guardian
+      motherGuardianTelephone: Yup.string()
         .max(50)
-        .required("Religious affiliation is required"),
-      maritalStatus: Yup.string()
+        .required("Telephone is required"),
+      motherGuardianEmail: Yup.string().max(50).required("Email is required"),
+      motherGuardianPOBox: Yup.string().max(50).required("P.O box is required"),
+      motherGuardianTown: Yup.string().max(50).required("Town is required"),
+      motherGuardianCountry: Yup.string()
         .max(50)
-        .required("MaritalStatus diocese  is required"),
+        .required("Country is required"),
+      // // sponsor
+      // sponsorTelephone: Yup.string().max(50).required("Sponsor is required"),
+      // sponsorEmail: Yup.string().max(50).required("Email is required"),
+      // sponsorPOBox: Yup.string().max(50).required("P.O box is required"),
+      // sponsorTown: Yup.string().max(50).required("Town is required"),
+      // sponsorCountry: Yup.string().max(50).required("Country is required"),
     }),
 
     onSubmit: async (values, helpers) => {
       console.log("Submit values", values);
       try {
-        // Save Personal Information
-        saveFormDataToStorage({
-          applicationForm: "postgraduate",
-          category: "personalInfo",
-          data: values,
-          updateAt: new Date().toISOString(),
-        });
+        // // Save Personal Information
+        // saveFormDataToStorage({
+        //   applicationForm: "postgraduate",
+        //   category: "personalInfo",
+        //   data: values,
+        //   updateAt: new Date().toISOString(),
+        // });
       } catch (err: any) {
         helpers.setStatus({ success: false });
         helpers.setSubmitting(false);
@@ -125,10 +202,9 @@ export const Section2: React.FC = () => {
     return key;
   };
 
+  // Validating general fields
   const formHasErrors = () => {
     let hasError = false;
-    delete formik.errors?.maritalStatus;
-
     const errors: any[] = transformToArrayOfObjects(formik.errors);
 
     errors?.map((error) => {
@@ -145,19 +221,21 @@ export const Section2: React.FC = () => {
 
     // check for empty field values
     if (
-      !formik.values.intake ||
-      !formik.values.program ||
-      !formik.values.campus ||
-      !formik.values.givenname ||
-      !formik.values.surname ||
-      !formik.values.othername ||
-      !formik.values.title ||
-      !formik.values.gender ||
-      !formik.values.dateOfBirth ||
-      !formik.values.nationality ||
-      !formik.values.countyOfResidence ||
-      !formik.values.homeDistrict ||
-      !formik.values.homeDiocese
+      !formik.values.contactTelephone ||
+      !formik.values.contactEmail ||
+      !formik.values.contactPOBox ||
+      !formik.values.contactTown ||
+      !formik.values.contactCountry ||
+      !formik.values.fatherGuardianTelephone ||
+      !formik.values.fatherGuardianEmail ||
+      !formik.values.fatherGuardianPOBox ||
+      !formik.values.fatherGuardianTown ||
+      !formik.values.fatherGuardianCountry ||
+      !formik.values.motherGuardianTelephone ||
+      !formik.values.motherGuardianEmail ||
+      !formik.values.motherGuardianPOBox ||
+      !formik.values.motherGuardianTown ||
+      !formik.values.motherGuardianCountry
     ) {
       dispatch(
         showCardNotification({
@@ -223,6 +301,7 @@ export const Section2: React.FC = () => {
   }
 
   const nextPageHandler = () => {
+    allCategoryHandler();
     if (!page || !section) return;
     if (formHasErrors()) return;
     const nextPage = parseInt(page) + 1;
@@ -267,6 +346,7 @@ export const Section2: React.FC = () => {
 
   const [disability, setDisability] = useState("");
   const [isDisabled, setIsDisabled] = useState(false);
+  const [disabilityError, setDisabilityError] = useState("");
 
   const disabilityChangeHandler = (event: any) => {
     const disabled: string = event.target.value;
@@ -285,10 +365,79 @@ export const Section2: React.FC = () => {
   });
 
   const disabilitiesCheckboxChangeHandler = (disability: any) => {
+    setDisabilityError(() => "");
     setDisabilities((prevDisabilities: any) => ({
       ...prevDisabilities,
       [disability]: !prevDisabilities[disability],
     }));
+  };
+
+  function disabilitySubmitHandler() {
+    const disabilitiesArray = [
+      {
+        disability: "Chronic Illness",
+        codeLabel: "chronicIllness",
+      },
+      {
+        disability: "Physical Disability",
+        codeLabel: "physicalDisability",
+      },
+      {
+        disability: "Impairment",
+        codeLabel: "impairment",
+      },
+      {
+        disability: "Others",
+        codeLabel: "others",
+      },
+    ];
+    // validate errors here
+
+    const codeLabelArray = transformToArrayOfObjects(disabilities);
+    console.log("codeLabelArray", codeLabelArray);
+
+    const selectedDisability = () => {
+      const checkedDisabilitiesArray: any[] = [];
+
+      for (let i = 0; i < codeLabelArray.length; i++) {
+        const key = extractItemKey(codeLabelArray[i]);
+        console.log("disability extracted key", key);
+
+        if (codeLabelArray[i][key] === true) {
+          const checkedDisability = disabilitiesArray.find(
+            (disability) => disability.codeLabel === key
+          );
+          console.log("checkedDisability", checkedDisability);
+          checkedDisabilitiesArray.push(checkedDisability?.disability);
+        }
+      }
+      return checkedDisabilitiesArray;
+    };
+    //error check
+    if (!selectedDisability()[0]) {
+      setDisabilityError(() => "If you are disabled please indicate!");
+      dispatch(
+        showCardNotification({
+          type: "error",
+          message: "If you are disabled please indicate!",
+        })
+      );
+      setTimeout(() => {
+        dispatch(hideCardNotification());
+      }, 5000);
+      return;
+    }
+    // submit values
+    saveFormDataToStorage({
+      applicationForm: "postgraduate",
+      category: "disability",
+      data: { disability: selectedDisability() },
+      updateAt: new Date().toISOString(),
+    });
+  }
+
+  const allCategoryHandler = () => {
+    disabilitySubmitHandler();
   };
 
   return (
@@ -313,7 +462,7 @@ export const Section2: React.FC = () => {
           footer="Employment footer"
         >
           <form className="w-full" onSubmit={formik.handleSubmit}>
-            {/* ----- Disability  Start----- */}
+            {/* ----- Disability  Start-----*/}
             <div className="mb-8">
               <p
                 className="text-gray-50 font-semibold inline-block
@@ -353,6 +502,14 @@ export const Section2: React.FC = () => {
 
               {isDisabled && (
                 <div className="mb-2 text-sm">
+                  {disabilityError && (
+                    <div>
+                      <span className="text-sm text-red-500">
+                        {disabilityError}
+                      </span>
+                    </div>
+                  )}
+                  <div></div>
                   <div>
                     <input
                       type="checkbox"
@@ -414,21 +571,23 @@ export const Section2: React.FC = () => {
                   className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
                 >
-                  {formik.errors.program && formik.touched.program && (
-                    <p className="absolute top-0 left-0 text-sm text-red-600">
-                      {formik.errors.program}
-                    </p>
-                  )}
+                  {isDisabled &&
+                    formik.errors.disabilityState &&
+                    formik.touched.disabilityState && (
+                      <p className="absolute top-0 left-0 text-sm text-red-600">
+                        {formik.errors.disabilityState}
+                      </p>
+                    )}
                   <label className="text-sm">
                     Briefly state nature of disability
                   </label>
                   <textarea
                     required
-                    id="program"
-                    name="program"
+                    id="disabilityState"
+                    name="disabilityState"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
-                    value={formik.values.program}
+                    value={formik.values.disabilityState}
                     className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none h-28"
@@ -452,20 +611,21 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
-                  </p>
-                )}
+                {formik.errors.contactTelephone &&
+                  formik.touched.contactTelephone && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.contactTelephone}
+                    </p>
+                  )}
                 <label className="text-sm">Telephone number</label>
                 <input
                   type="text"
                   required
-                  id="program"
-                  name="program"
+                  id="contactTelephone"
+                  name="contactTelephone"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={formik.values.contactTelephone}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -475,20 +635,20 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
+                {formik.errors.contactEmail && formik.touched.contactEmail && (
                   <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
+                    {formik.errors.contactEmail}
                   </p>
                 )}
                 <label className="text-sm">Email</label>
                 <input
                   type="email"
                   required
-                  id="program"
-                  name="program"
+                  id="contactEmail"
+                  name="contactEmail"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={formik.values.contactEmail}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -498,20 +658,20 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
+                {formik.errors.contactPOBox && formik.touched.contactPOBox && (
                   <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
+                    {formik.errors.contactPOBox}
                   </p>
                 )}
                 <label className="text-sm">P.O BOX</label>
                 <input
                   type="text"
                   required
-                  id="program"
-                  name="program"
+                  id="contactPOBox"
+                  name="contactPOBox"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={formik.values.contactPOBox}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -521,20 +681,20 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
+                {formik.errors.contactTown && formik.touched.contactTown && (
                   <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
+                    {formik.errors.contactTown}
                   </p>
                 )}
                 <label className="text-sm">Town</label>
                 <input
                   type="text"
                   required
-                  id="program"
-                  name="program"
+                  id="contactTown"
+                  name="contactTown"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={formik.values.contactTown}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -544,20 +704,21 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
-                  </p>
-                )}
+                {formik.errors.contactCountry &&
+                  formik.touched.contactCountry && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.contactCountry}
+                    </p>
+                  )}
                 <label className="text-sm">Country</label>
                 <input
                   type="text"
                   required
-                  id="program"
-                  name="program"
+                  id="contactCountry"
+                  name="contactCountry"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={formik.values.contactCountry}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -590,20 +751,21 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
-                  </p>
-                )}
+                {formik.errors.fatherGuardianTelephone &&
+                  formik.touched.fatherGuardianTelephone && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.fatherGuardianTelephone}
+                    </p>
+                  )}
                 <label className="text-sm">Telephone number</label>
                 <input
                   type="text"
                   required
-                  id="program"
-                  name="program"
+                  id="fatherGuardianTelephone"
+                  name="fatherGuardianTelephone"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={formik.values.fatherGuardianTelephone}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -613,20 +775,21 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
-                  </p>
-                )}
+                {formik.errors.fatherGuardianEmail &&
+                  formik.touched.fatherGuardianEmail && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.fatherGuardianEmail}
+                    </p>
+                  )}
                 <label className="text-sm">Email</label>
                 <input
                   type="email"
                   required
-                  id="program"
-                  name="program"
+                  id="fatherGuardianEmail"
+                  name="fatherGuardianEmail"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={formik.values.fatherGuardianEmail}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -636,20 +799,21 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
-                  </p>
-                )}
+                {formik.errors.fatherGuardianPOBox &&
+                  formik.touched.fatherGuardianPOBox && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.fatherGuardianPOBox}
+                    </p>
+                  )}
                 <label className="text-sm">P.O BOX</label>
                 <input
                   type="text"
                   required
-                  id="program"
-                  name="program"
+                  id="fatherGuardianPOBox"
+                  name="fatherGuardianPOBox"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={formik.values.fatherGuardianPOBox}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -659,20 +823,21 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
-                  </p>
-                )}
+                {formik.errors.fatherGuardianTown &&
+                  formik.touched.fatherGuardianTown && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.fatherGuardianTown}
+                    </p>
+                  )}
                 <label className="text-sm">Town</label>
                 <input
                   type="text"
                   required
-                  id="program"
-                  name="program"
+                  id="fatherGuardianTown"
+                  name="fatherGuardianTown"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={formik.values.fatherGuardianTown}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -682,20 +847,21 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
-                  </p>
-                )}
+                {formik.errors.fatherGuardianCountry &&
+                  formik.touched.fatherGuardianCountry && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.fatherGuardianCountry}
+                    </p>
+                  )}
                 <label className="text-sm">Country</label>
                 <input
                   type="text"
                   required
-                  id="program"
-                  name="program"
+                  id="fatherGuardianCountry"
+                  name="fatherGuardianCountry"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={formik.values.fatherGuardianCountry}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -717,20 +883,21 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
-                  </p>
-                )}
+                {formik.errors.motherGuardianTelephone &&
+                  formik.touched.motherGuardianTelephone && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.motherGuardianTelephone}
+                    </p>
+                  )}
                 <label className="text-sm">Telephone number</label>
                 <input
                   type="text"
                   required
-                  id="program"
-                  name="program"
+                  id="motherGuardianTelephone"
+                  name="motherGuardianTelephone"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={formik.values.motherGuardianTelephone}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -740,20 +907,21 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
-                  </p>
-                )}
+                {formik.errors.motherGuardianEmail &&
+                  formik.touched.motherGuardianEmail && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.motherGuardianEmail}
+                    </p>
+                  )}
                 <label className="text-sm">Email</label>
                 <input
                   type="email"
                   required
-                  id="program"
-                  name="program"
+                  id="motherGuardianEmail"
+                  name="motherGuardianEmail"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={formik.values.motherGuardianEmail}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -763,20 +931,21 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
-                  </p>
-                )}
+                {formik.errors.motherGuardianPOBox &&
+                  formik.touched.motherGuardianPOBox && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.motherGuardianPOBox}
+                    </p>
+                  )}
                 <label className="text-sm">P.O BOX</label>
                 <input
                   type="text"
                   required
-                  id="program"
-                  name="program"
+                  id="motherGuardianPOBox"
+                  name="motherGuardianPOBox"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={formik.values.motherGuardianPOBox}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -786,20 +955,21 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
-                  </p>
-                )}
+                {formik.errors.motherGuardianTown &&
+                  formik.touched.motherGuardianTown && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.motherGuardianTown}
+                    </p>
+                  )}
                 <label className="text-sm">Town</label>
                 <input
                   type="text"
                   required
-                  id="program"
-                  name="program"
+                  id="motherGuardianTown"
+                  name="motherGuardianTown"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={formik.values.motherGuardianTown}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -809,20 +979,21 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
-                  </p>
-                )}
+                {formik.errors.motherGuardianCountry &&
+                  formik.touched.motherGuardianCountry && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.motherGuardianCountry}
+                    </p>
+                  )}
                 <label className="text-sm">Country</label>
                 <input
                   type="text"
                   required
-                  id="program"
-                  name="program"
+                  id="motherGuardianCountry"
+                  name="motherGuardianCountry"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={formik.values.motherGuardianCountry}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -843,20 +1014,21 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
-                  </p>
-                )}
+                {formik.errors.sponsorTelephone &&
+                  formik.touched.sponsorTelephone && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.sponsorTelephone}
+                    </p>
+                  )}
                 <label className="text-sm">Telephone number</label>
                 <input
                   type="text"
                   // required
-                  id="program"
-                  name="program"
+                  id="sponsorTelephone"
+                  name="sponsorTelephone"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={formik.values.sponsorTelephone}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -866,20 +1038,20 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
+                {formik.errors.sponsorEmail && formik.touched.sponsorEmail && (
                   <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
+                    {formik.errors.sponsorEmail}
                   </p>
                 )}
                 <label className="text-sm">Email</label>
                 <input
                   type="email"
                   // required
-                  id="program"
-                  name="program"
+                  id="sponsorEmail"
+                  name="sponsorEmail"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={formik.values.sponsorEmail}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -889,20 +1061,20 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
+                {formik.errors.sponsorPOBox && formik.touched.sponsorPOBox && (
                   <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
+                    {formik.errors.sponsorPOBox}
                   </p>
                 )}
                 <label className="text-sm">P.O BOX</label>
                 <input
                   type="text"
                   // required
-                  id="program"
-                  name="program"
+                  id="sponsorPOBox"
+                  name="sponsorPOBox"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={formik.values.sponsorPOBox}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -912,20 +1084,20 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
+                {formik.errors.sponsorTown && formik.touched.sponsorTown && (
                   <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
+                    {formik.errors.sponsorTown}
                   </p>
                 )}
                 <label className="text-sm">Town</label>
                 <input
                   type="text"
                   // required
-                  id="program"
-                  name="program"
+                  id="sponsorTown"
+                  name="sponsorTown"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={formik.values.sponsorTown}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -935,20 +1107,21 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.program}
-                  </p>
-                )}
+                {formik.errors.sponsorCountry &&
+                  formik.touched.sponsorCountry && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.sponsorCountry}
+                    </p>
+                  )}
                 <label className="text-sm">Country</label>
                 <input
                   type="text"
                   // required
-                  id="program"
-                  name="program"
+                  id="sponsorCountry"
+                  name="sponsorCountry"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={formik.values.sponsorCountry}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -983,11 +1156,11 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
+                {/* {formik.errors.program && formik.touched.program && (
                   <p className="absolute top-0 left-0 text-sm text-red-600">
                     {formik.errors.program}
                   </p>
-                )}
+                )} */}
                 <label className="text-sm">Name and address of employer</label>
                 <input
                   type="text"
@@ -995,8 +1168,7 @@ export const Section2: React.FC = () => {
                   id="program"
                   name="program"
                   onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={""}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -1006,11 +1178,11 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
+                {/* {formik.errors.program && formik.touched.program && (
                   <p className="absolute top-0 left-0 text-sm text-red-600">
                     {formik.errors.program}
                   </p>
-                )}
+                )} */}
                 <label className="text-sm">Designation</label>
                 <input
                   type="text"
@@ -1019,7 +1191,7 @@ export const Section2: React.FC = () => {
                   name="program"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={""}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -1029,11 +1201,11 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
+                {/* {formik.errors.program && formik.touched.program && (
                   <p className="absolute top-0 left-0 text-sm text-red-600">
                     {formik.errors.program}
                   </p>
-                )}
+                )} */}
                 <label className="text-sm">From</label>
                 <input
                   type="date"
@@ -1042,7 +1214,7 @@ export const Section2: React.FC = () => {
                   name="program"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={""}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
@@ -1052,11 +1224,11 @@ export const Section2: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.program && formik.touched.program && (
+                {/* {formik.errors.program && formik.touched.program && (
                   <p className="absolute top-0 left-0 text-sm text-red-600">
                     {formik.errors.program}
                   </p>
-                )}
+                )} */}
                 <label className="text-sm">To</label>
                 <input
                   type="date"
@@ -1065,7 +1237,7 @@ export const Section2: React.FC = () => {
                   name="program"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.program}
+                  value={""}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full resize-none"
