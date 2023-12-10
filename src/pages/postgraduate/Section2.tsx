@@ -453,6 +453,7 @@ export const Section2: React.FC = () => {
     disabilitySubmitHandler();
   };
 
+  // EMPLOYER RECORD LOGIC
   const effectRan = useRef(false);
   const [employerArray, setEmployerArray] = useState<any[]>([]);
 
@@ -487,13 +488,48 @@ export const Section2: React.FC = () => {
     }
   }, []);
 
+  const AddEmployerHandler = () => {
+    const currentMaxEmployerArrayIndex: number = employerArray.length - 1;
+    const incrementedEmployArrayIndex: number =
+      currentMaxEmployerArrayIndex + 1;
+    setEmployerArray((employers) => [
+      ...employers,
+      buildEmployer(incrementedEmployArrayIndex),
+    ]);
+  };
+
+  const removeEmployerHandler = () => {
+    const lastEmployerArrayIndex: number = employerArray.length - 1;
+    if (lastEmployerArrayIndex <= 1) return;
+
+    const reducedEmployArray = employerArray.filter(
+      (_, index) => index !== lastEmployerArrayIndex
+    );
+    setEmployerArray(() => reducedEmployArray);
+  };
+
+  const showEmployerAddButton = (index: number) => {
+    return index === employerArray.length - 1;
+  };
+
+  const showEmployerRemoveButton = (index: number) => {
+    const canShowEmployerRemoveButton: boolean = employerArray.length > 2;
+    const isLastEmployerArrayIndex = index === employerArray.length - 1;
+    const showRemoveButton: boolean =
+      canShowEmployerRemoveButton && isLastEmployerArrayIndex;
+
+    return showRemoveButton;
+  };
+
   const employerFieldsChangeHandler = (
     event: ChangeEvent<HTMLInputElement>,
     fieldIndex: number,
     fieldName: string
   ) => {
     const value = event.target.value;
-    const mutatedEmployerArray: Employer[] = [];
+    const mutatedEmployerArray: any[] = [];
+
+    console.log("Input value", value);
 
     employerArray.map((employer: any, index) => {
       if (index === fieldIndex) {
@@ -1333,22 +1369,46 @@ export const Section2: React.FC = () => {
                         transition-all text-sm w-full resize-none"
                     />
                   </div>
-                  <button
-                    className="bg-gray-300 flex items-center justify-center px-4 
-                       py-2 rounded mt-4 gap-4 text-primary"
-                  >
-                    <span>
-                      <IconContext.Provider
-                        value={{
-                          size: "1rem",
-                          color: "#d6336c",
-                        }}
+                  <div className="flex items-center justify-center gap-4">
+                    {showEmployerAddButton(index) && (
+                      <button
+                        className="bg-gray-300 flex items-center justify-center px-4 
+                       py-2 rounded mt-4 gap-4 text-primary w-full"
+                        onClick={() => AddEmployerHandler()}
                       >
-                        <FaPlus />
-                      </IconContext.Provider>
-                    </span>
-                    <span>Add </span>
-                  </button>
+                        <span>
+                          <IconContext.Provider
+                            value={{
+                              size: "1rem",
+                              color: "#d6336c",
+                            }}
+                          >
+                            <FaPlus />
+                          </IconContext.Provider>
+                        </span>
+                        <span>Add </span>
+                      </button>
+                    )}
+                    {showEmployerRemoveButton(index) && (
+                      <button
+                        className="bg-gray-300 flex items-center justify-center px-4 
+                        py-2 rounded mt-4 gap-4 text-primary w-full"
+                        onClick={() => removeEmployerHandler()}
+                      >
+                        <span>
+                          <IconContext.Provider
+                            value={{
+                              size: "1rem",
+                              color: "#d6336c",
+                            }}
+                          >
+                            <FaPlus />
+                          </IconContext.Provider>
+                        </span>
+                        <span>Remove </span>
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
