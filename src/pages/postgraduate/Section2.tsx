@@ -450,6 +450,7 @@ export const Section2: React.FC = () => {
   }
 
   const allCategoryHandler = () => {
+    employerRecordSubmitHandler();
     disabilitySubmitHandler();
   };
 
@@ -529,8 +530,6 @@ export const Section2: React.FC = () => {
     const value = event.target.value;
     const mutatedEmployerArray: any[] = [];
 
-    console.log("Input value", value);
-
     employerArray.map((employer: any, index) => {
       if (index === fieldIndex) {
         employer[fieldName] = value;
@@ -539,9 +538,39 @@ export const Section2: React.FC = () => {
       }
       mutatedEmployerArray.push(employer);
     });
-    console.log("mutatedEmployerArray", mutatedEmployerArray);
     setEmployerArray(() => mutatedEmployerArray);
   };
+
+  function employerRecordSubmitHandler() {
+    const firstEmployerArray = transformToArrayOfObjects(employerArray[0]);
+    console.log("firstEmployerArray", firstEmployerArray);
+
+    for (let i = 0; i < firstEmployerArray.length; i++) {
+      const key = extractItemKey(firstEmployerArray[i]);
+      console.log("employer extracted key", key);
+
+      if (firstEmployerArray[i][key]) continue;
+      dispatch(
+        showCardNotification({
+          type: "error",
+          message: "Please fill all fields of employer 1",
+        })
+      );
+      setTimeout(() => {
+        dispatch(hideCardNotification());
+      }, 5000);
+    }
+
+    // TODO: validate for more 2 employers
+
+    // submit values
+    saveFormDataToStorage({
+      applicationForm: "postgraduate",
+      category: "employerRecord",
+      data: { employers: employerArray }, //To be changed
+      updateAt: new Date().toISOString(),
+    });
+  }
 
   return (
     <Fragment>
