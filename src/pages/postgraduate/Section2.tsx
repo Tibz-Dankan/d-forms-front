@@ -454,22 +454,29 @@ export const Section2: React.FC = () => {
   };
 
   const effectRan = useRef(false);
-  const [employerArray, setEmployerArray] = useState<Employer[]>([]);
-  const [focusedEmployerField, setFocusedEmployerField] = useState("");
+  const [employerArray, setEmployerArray] = useState<any[]>([]);
+
+  const buildEmployer = (index: number) => {
+    const employer: any = {};
+    employer[`nameAddress${index}`] = "";
+    employer[`designation${index}`] = "";
+    employer[`from${index}`] = "";
+    employer[`to${index}`] = "";
+
+    return employer;
+  };
+
+  const buildEmployerFieldValue = (fieldName: string, index: number) => {
+    return `${fieldName}${index}`;
+  };
 
   useEffect(() => {
     if (effectRan.current === false) {
       const constructEmployerInitialFieldCount = () => {
-        const employer: Employer = {
-          nameAddress: "",
-          designation: "",
-          from: "",
-          to: "",
-        };
         if (employerArray[0]) return;
 
-        for (let i = 0; i < 2; i++) {
-          setEmployerArray((employers) => [...employers, employer]);
+        for (let index = 0; index < 2; index++) {
+          setEmployerArray((employers) => [...employers, buildEmployer(index)]);
         }
       };
       constructEmployerInitialFieldCount();
@@ -480,24 +487,15 @@ export const Section2: React.FC = () => {
     }
   }, []);
 
-  // type Employer = {
-  //   nameAddress: string;
-  //   designation: string;
-  //   from: string;
-  //   to: string;
-  // };
-  type FieldName = "nameAddress" | "designation" | "from" | "to";
-
   const employerFieldsChangeHandler = (
     event: ChangeEvent<HTMLInputElement>,
     fieldIndex: number,
-    fieldName: FieldName
+    fieldName: string
   ) => {
     const value = event.target.value;
-    console.log("form value", value);
     const mutatedEmployerArray: Employer[] = [];
 
-    employerArray.map((employer: Employer, index) => {
+    employerArray.map((employer: any, index) => {
       if (index === fieldIndex) {
         employer[fieldName] = value;
         mutatedEmployerArray.push(employer);
@@ -507,10 +505,6 @@ export const Section2: React.FC = () => {
     });
     console.log("mutatedEmployerArray", mutatedEmployerArray);
     setEmployerArray(() => mutatedEmployerArray);
-  };
-
-  const defineFocusedEmployerField = (field: string) => {
-    setFocusedEmployerField(() => field);
   };
 
   return (
@@ -1239,19 +1233,18 @@ export const Section2: React.FC = () => {
                     <input
                       type="text"
                       required
-                      id={`${employer["nameAddress"]}-${index}`}
-                      name={`${employer["nameAddress"]}-${index}`}
-                      onFocus={() =>
-                        defineFocusedEmployerField(
-                          `${employer["nameAddress"]}-${index}`
+                      id={`${employer["nameAddress"]}${index}`}
+                      name={`${employer["nameAddress"]}${index}`}
+                      onChange={(event) =>
+                        employerFieldsChangeHandler(
+                          event,
+                          index,
+                          buildEmployerFieldValue("nameAddress", index)
                         )
                       }
-                      onChange={(event) =>
-                        employerFieldsChangeHandler(event, index, "nameAddress")
+                      value={
+                        employer[buildEmployerFieldValue("nameAddress", index)]
                       }
-                      onBlur={() => defineFocusedEmployerField("")}
-                      value={focusedEmployerField}
-                      // value={focusedEmployerField && employer.nameAddress}
                       className="p-2 outline-none rounded border-[2px]
                         border-gray-500 focus:border-[2px] focus:border-primaryLight
                         transition-all text-sm w-full resize-none"
@@ -1269,13 +1262,18 @@ export const Section2: React.FC = () => {
                     <label className="text-sm">Designation</label>
                     <input
                       type="text"
-                      id={employer["designation"]}
-                      name={employer["designation"]}
-                      // onBlur={formik.handleBlur}
+                      id={`${employer["designation"]}${index}`}
+                      name={`${employer["designation"]}${index}`}
                       onChange={(event) =>
-                        employerFieldsChangeHandler(event, index, "designation")
+                        employerFieldsChangeHandler(
+                          event,
+                          index,
+                          buildEmployerFieldValue("designation", index)
+                        )
                       }
-                      value={employer.designation}
+                      value={
+                        employer[buildEmployerFieldValue("designation", index)]
+                      }
                       className="p-2 outline-none rounded border-[2px]
                         border-gray-500 focus:border-[2px] focus:border-primaryLight
                         transition-all text-sm w-full resize-none"
@@ -1293,14 +1291,16 @@ export const Section2: React.FC = () => {
                     <label className="text-sm">From</label>
                     <input
                       type="date"
-                      id={employer["from"]}
-                      name={employer["from"]}
-                      onBlur={formik.handleBlur}
-                      // onChange={formik.handleChange}
+                      id={`${employer["from"]}${index}`}
+                      name={`${employer["from"]}${index}`}
                       onChange={(event) =>
-                        employerFieldsChangeHandler(event, index, "from")
+                        employerFieldsChangeHandler(
+                          event,
+                          index,
+                          buildEmployerFieldValue("from", index)
+                        )
                       }
-                      value={employer.from}
+                      value={employer[buildEmployerFieldValue("from", index)]}
                       className="p-2 outline-none rounded border-[2px]
                         border-gray-500 focus:border-[2px] focus:border-primaryLight
                         transition-all text-sm w-full resize-none"
@@ -1319,13 +1319,15 @@ export const Section2: React.FC = () => {
                     <input
                       type="date"
                       id={employer["to"]}
-                      name={employer["to"]}
-                      onBlur={formik.handleBlur}
-                      // onChange={formik.handleChange}
+                      name={`${employer["to"]}${index}`}
                       onChange={(event) =>
-                        employerFieldsChangeHandler(event, index, "to")
+                        employerFieldsChangeHandler(
+                          event,
+                          index,
+                          buildEmployerFieldValue("to", index)
+                        )
                       }
-                      value={employer.to}
+                      value={employer[buildEmployerFieldValue("to", index)]}
                       className="p-2 outline-none rounded border-[2px]
                         border-gray-500 focus:border-[2px] focus:border-primaryLight
                         transition-all text-sm w-full resize-none"
