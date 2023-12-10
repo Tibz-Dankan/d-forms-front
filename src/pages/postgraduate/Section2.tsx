@@ -572,6 +572,19 @@ export const Section2: React.FC = () => {
     });
   }
 
+  function validateApplicantSponsor() {
+    const sponsor = {
+      telephone: formik.values.sponsorTelephone,
+      email: formik.values.sponsorEmail,
+      POBox: formik.values.sponsorPOBox,
+      town: formik.values.sponsorTown,
+      country: formik.values.sponsorCountry,
+    };
+
+    const sponsorProperyArray = transformToArrayOfObjects(sponsor);
+    // TODO: to add more validation for sponsor here
+  }
+
   return (
     <Fragment>
       <div className="relative full grid place-items-center h-auto">
