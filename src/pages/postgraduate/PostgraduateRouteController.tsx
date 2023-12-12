@@ -3,6 +3,7 @@ import { Section1 } from "./Section1";
 import { Section1x } from "./Section1x";
 import { Section2 } from "./Section2";
 import { Section3 } from "./Section3";
+import { Section4 } from "./Section4";
 import { Routes, Route } from "react-router-dom";
 
 export const PostgraduateRouteController: React.FC = () => {
@@ -23,9 +24,14 @@ export const PostgraduateRouteController: React.FC = () => {
       path: "/section2",
     },
     {
-      page: 3,
+      page: 4,
       element: <Section3 />,
       path: "/section3",
+    },
+    {
+      page: 5,
+      element: <Section4 />,
+      path: "/section4",
     },
   ];
 
