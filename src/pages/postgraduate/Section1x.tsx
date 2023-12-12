@@ -1472,25 +1472,6 @@ export const Section1x: React.FC = () => {
                     />
                   </div>
                   <div className="flex items-center justify-center gap-4">
-                    {showEmployerAddButton(index) && (
-                      <button
-                        className="bg-gray-300 flex items-center justify-center px-4 
-                       py-2 rounded mt-4 gap-4 text-primary w-full"
-                        onClick={() => AddEmployerHandler()}
-                      >
-                        <span>
-                          <IconContext.Provider
-                            value={{
-                              size: "1rem",
-                              color: "#d6336c",
-                            }}
-                          >
-                            <FaPlus />
-                          </IconContext.Provider>
-                        </span>
-                        <span>Add </span>
-                      </button>
-                    )}
                     {showEmployerRemoveButton(index) && (
                       <button
                         className="bg-gray-300 flex items-center justify-center px-4 
@@ -1508,6 +1489,25 @@ export const Section1x: React.FC = () => {
                           </IconContext.Provider>
                         </span>
                         <span>Remove </span>
+                      </button>
+                    )}
+                    {showEmployerAddButton(index) && (
+                      <button
+                        className="bg-gray-300 flex items-center justify-center px-4 
+                       py-2 rounded mt-4 gap-4 text-primary w-full"
+                        onClick={() => AddEmployerHandler()}
+                      >
+                        <span>
+                          <IconContext.Provider
+                            value={{
+                              size: "1rem",
+                              color: "#d6336c",
+                            }}
+                          >
+                            <FaPlus />
+                          </IconContext.Provider>
+                        </span>
+                        <span>Add </span>
                       </button>
                     )}
                   </div>
