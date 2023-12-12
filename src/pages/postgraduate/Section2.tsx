@@ -71,7 +71,7 @@ export const Section2: React.FC = () => {
         //   Save info to storage
         saveFormDataToStorage({
           applicationForm: "postgraduate",
-          category: "courseChoiceWorkExprience",
+          category: "courseChoiceWorkExperience",
           data: formik.values,
           updateAt: new Date().toISOString(),
         });

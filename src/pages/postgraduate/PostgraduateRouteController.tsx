@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { Section1 } from "./Section1";
 import { Section1x } from "./Section1x";
 import { Section2 } from "./Section2";
+import { Section3 } from "./Section3";
 import { Routes, Route } from "react-router-dom";
 
 export const PostgraduateRouteController: React.FC = () => {
@@ -20,6 +21,11 @@ export const PostgraduateRouteController: React.FC = () => {
       page: 3,
       element: <Section2 />,
       path: "/section2",
+    },
+    {
+      page: 3,
+      element: <Section3 />,
+      path: "/section3",
     },
   ];
 
