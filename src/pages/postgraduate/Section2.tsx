@@ -14,7 +14,7 @@ import {
 } from "../../store/actions/notification";
 import { useDispatch } from "react-redux";
 import { IconContext } from "react-icons";
-import { FaPlus } from "react-icons/fa6";
+import { FaPlus, FaMinus } from "react-icons/fa6";
 import { IoIosArrowRoundBack, IoIosArrowRoundForward } from "react-icons/io";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { transformToArrayOfObjects } from "../../utils/transformToArrayOfObject";
@@ -1444,7 +1444,7 @@ export const Section2: React.FC = () => {
                               color: "#d6336c",
                             }}
                           >
-                            <FaPlus />
+                            <FaMinus />
                           </IconContext.Provider>
                         </span>
                         <span>Remove </span>
