@@ -69,6 +69,12 @@ export const Section2: React.FC = () => {
       console.log("Submit values", values);
       try {
         //   Save info to storage
+        saveFormDataToStorage({
+          applicationForm: "postgraduate",
+          category: "courseChoiceWorkExprience",
+          data: formik.values,
+          updateAt: new Date().toISOString(),
+        });
       } catch (err: any) {
         helpers.setStatus({ success: false });
         helpers.setSubmitting(false);
