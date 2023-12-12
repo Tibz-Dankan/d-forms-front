@@ -266,7 +266,7 @@ export const Section1: React.FC = () => {
       data: formik.values,
       updateAt: new Date().toISOString(),
     });
-    navigate(`/postgraduate/section${nextPage}`, { replace: false });
+    navigate(`/postgraduate/section1x`, { replace: false });
   };
 
   const prevPageHandler = () => {

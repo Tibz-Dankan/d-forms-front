@@ -66,7 +66,10 @@ type Disability = {
 
 type InitialValues = ContactInfo & GuardianInfo & SponsorInfo & Disability;
 
-export const Section2: React.FC = () => {
+/**
+ * Section1x component has section 1.2 to 1.4
+ */
+export const Section1x: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams({
     page: "",
     section: "",
