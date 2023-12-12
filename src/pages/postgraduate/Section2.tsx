@@ -170,7 +170,7 @@ export const Section2: React.FC = () => {
   }
 
   const nextPageHandler = () => {
-    allCategoryHandler();
+    allCategorySubmitHandler();
     if (!page || !section) return;
     if (formHasErrors()) return;
     const nextPage = parseInt(page) + 1;
@@ -213,9 +213,17 @@ export const Section2: React.FC = () => {
     navigate(`/postgraduate/section${nextPage}`, { replace: false });
   };
 
-  const allCategoryHandler = () => {
-    educationBgSubmitHandler();
-    otherQualificationSubmitHandler();
+  const allCategorySubmitHandler = () => {
+    try {
+      educationBgSubmitHandler();
+      otherQualificationSubmitHandler();
+      refereeSubmitHandler();
+    } catch (error: any) {
+      dispatch(showCardNotification({ type: "error", message: error.message }));
+      setTimeout(() => {
+        dispatch(hideCardNotification());
+      }, 5000);
+    }
   };
 
   //   Education background
@@ -319,15 +327,8 @@ export const Section2: React.FC = () => {
       console.log("education extracted key", key);
 
       if (firstInstituitionArray[i][key]) continue;
-      dispatch(
-        showCardNotification({
-          type: "error",
-          message: "Please fill all fields of employer 1",
-        })
-      );
-      setTimeout(() => {
-        dispatch(hideCardNotification());
-      }, 5000);
+
+      throw new Error("Please fill all fields of education background");
     }
 
     saveFormDataToStorage({
@@ -338,7 +339,7 @@ export const Section2: React.FC = () => {
     });
   }
 
-  //   Other proffessional qualifications
+  //   Other professional qualifications
   const [otherQualificationArray, setOtherQualificationArray] = useState<any[]>(
     []
   );
@@ -440,27 +441,98 @@ export const Section2: React.FC = () => {
     );
     console.log("firstQualificationArray", firstQualificationArray);
 
-    for (let i = 0; i < otherQualificationArray.length; i++) {
+    for (let i = 0; i < firstQualificationArray.length; i++) {
       const key = extractItemKey(firstQualificationArray[i]);
       console.log("Qualification extracted key", key);
 
       if (firstQualificationArray[i][key]) continue;
-      dispatch(
-        showCardNotification({
-          type: "error",
-          message: "Please fill all fields of employer 1",
-        })
-      );
-      setTimeout(() => {
-        dispatch(hideCardNotification());
-      }, 5000);
+      // throw new Error("Please fill other qualifications if any");
     }
 
-    // submit values
     saveFormDataToStorage({
       applicationForm: "postgraduate",
       category: "otherQualification",
       data: { otherQualification: otherQualificationArray },
+      updateAt: new Date().toISOString(),
+    });
+  }
+
+  //  Academic referee
+  const [refereeArray, setRefereeArray] = useState<any[]>([]);
+
+  const buildReferee = (index: number) => {
+    const referee: any = {};
+    referee[`name${index}`] = "";
+    referee[`POBox${index}`] = "";
+    referee[`town${index}`] = "";
+    referee[`country${index}`] = "";
+    referee[`telephone${index}`] = "";
+    referee[`email${index}`] = "";
+
+    return referee;
+  };
+
+  const buildRefereeFieldValue = (fieldName: string, index: number) => {
+    return `${fieldName}${index}`;
+  };
+
+  useEffect(() => {
+    if (effectRan.current === false) {
+      const constructRefereeFieldCount = () => {
+        if (refereeArray[0]) return;
+
+        for (let index = 0; index < 2; index++) {
+          setRefereeArray((qualifications) => [
+            ...qualifications,
+            buildReferee(index),
+          ]);
+        }
+      };
+      constructRefereeFieldCount();
+
+      return () => {
+        effectRan.current = true;
+      };
+    }
+  }, []);
+
+  const refereeChangeHandler = (
+    event: ChangeEvent<HTMLInputElement>,
+    fieldIndex: number,
+    fieldName: string
+  ) => {
+    const value = event.target.value;
+    const mutatedRefereeArray: any[] = [];
+
+    refereeArray.map((referee: any, index) => {
+      if (index === fieldIndex) {
+        referee[fieldName] = value;
+        mutatedRefereeArray.push(referee);
+        return;
+      }
+      mutatedRefereeArray.push(referee);
+    });
+    setRefereeArray(() => mutatedRefereeArray);
+  };
+
+  function refereeSubmitHandler() {
+    for (let j = 0; j < refereeArray.length; j++) {
+      const singleRefereeArray = transformToArrayOfObjects(refereeArray[j]);
+      console.log("singleRefereeArray", singleRefereeArray);
+
+      for (let i = 0; i < singleRefereeArray.length; i++) {
+        const key = extractItemKey(singleRefereeArray[i]);
+        console.log("singleRefereeArray extracted key", key);
+
+        if (singleRefereeArray[i][key]) continue;
+        throw new Error("Please fill all fields of referees");
+      }
+    }
+
+    saveFormDataToStorage({
+      applicationForm: "postgraduate",
+      category: "referee",
+      data: { referee: refereeArray },
       updateAt: new Date().toISOString(),
     });
   }
@@ -498,7 +570,7 @@ export const Section2: React.FC = () => {
             </div>
 
             <div className="my-2">
-              <p className="text-gray-800 inline-block px-4 py-2 rounded">
+              <p className="text-gray-800 inline-block py-2 rounded">
                 2.0 Secondary Schools, Colleges and Universities attended (Give
                 names dates, qualifications and grades )
               </p>
@@ -664,7 +736,7 @@ export const Section2: React.FC = () => {
 
             {/* ----- Other Professional qualifications Start -----*/}
             <div className="my-2">
-              <p className="text-gray-800 inline-block px-4 py-2 rounded">
+              <p className="text-gray-800 inline-block py-2 rounded">
                 2.1. Other professional qualifications (with dates)
               </p>
             </div>
@@ -718,7 +790,6 @@ export const Section2: React.FC = () => {
                     <label className="text-sm">Date</label>
                     <input
                       type="date"
-                      required
                       id={`${qualification["otherQualificationDate"]}${index}`}
                       name={`${qualification["otherQualificationDate"]}${index}`}
                       onChange={(event) =>
@@ -792,7 +863,7 @@ export const Section2: React.FC = () => {
 
             {/*----- Reason for choosing course & Previous work experience start -----*/}
             <div className="my-2">
-              <p className="text-gray-800 inline-block px-4 py-2 rounded">
+              <p className="text-gray-800 inline-block py-2 rounded">
                 2.2. Kindly use a separate sheet of paper and write a one page
                 support letter stating in particular:
               </p>
@@ -848,6 +919,164 @@ export const Section2: React.FC = () => {
               />
             </div>
             {/*----- Reason for choosing course & Previous work experience End -----*/}
+
+            {/* ----- Referee Start -----*/}
+            <div className="my-2">
+              <p className="text-gray-800 inline-block py-2 rounded">
+                2.3. Names and address of two referees who are familiar with
+                your academic ability and performance.
+              </p>
+            </div>
+            {refereeArray.map((referee, index) => (
+              <div key={index}>
+                <div className="my-2">
+                  <p
+                    className="text-gray-800 font-semibold inline-block
+                         px-4 py-2 rounded bg-gray-400"
+                  >
+                    Referee {index + 1}
+                  </p>
+                </div>
+                <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2 mt-2 mb-8">
+                  <div
+                    className="relative pt-4 flex flex-col items-start 
+                        justify-center gap-1"
+                  >
+                    <label className="text-sm">Name</label>
+                    <input
+                      type="text"
+                      required
+                      id={`${referee["name"]}${index}`}
+                      name={`${referee["name"]}${index}`}
+                      onChange={(event) =>
+                        refereeChangeHandler(
+                          event,
+                          index,
+                          buildRefereeFieldValue("name", index)
+                        )
+                      }
+                      value={referee[buildRefereeFieldValue("name", index)]}
+                      className="p-2 outline-none rounded border-[2px]
+                          border-gray-500 focus:border-[2px] focus:border-primaryLight
+                          transition-all text-sm w-full resize-none"
+                    />
+                  </div>
+                  <div
+                    className="relative pt-4 flex flex-col items-start 
+                        justify-center gap-1"
+                  >
+                    <label className="text-sm">P.O Box</label>
+                    <input
+                      type="text"
+                      id={`${referee["POBox"]}${index}`}
+                      name={`${referee["POBox"]}${index}`}
+                      onChange={(event) =>
+                        refereeChangeHandler(
+                          event,
+                          index,
+                          buildRefereeFieldValue("POBox", index)
+                        )
+                      }
+                      value={referee[buildRefereeFieldValue("POBox", index)]}
+                      className="p-2 outline-none rounded border-[2px]
+                          border-gray-500 focus:border-[2px] focus:border-primaryLight
+                          transition-all text-sm w-full resize-none"
+                    />
+                  </div>
+                  <div
+                    className="relative pt-4 flex flex-col items-start 
+                     justify-center gap-1"
+                  >
+                    <label className="text-sm">Town</label>
+                    <input
+                      type="text"
+                      id={`${referee["town"]}${index}`}
+                      name={`${referee["town"]}${index}`}
+                      onChange={(event) =>
+                        refereeChangeHandler(
+                          event,
+                          index,
+                          buildRefereeFieldValue("town", index)
+                        )
+                      }
+                      value={referee[buildRefereeFieldValue("town", index)]}
+                      className="p-2 outline-none rounded border-[2px]
+                          border-gray-500 focus:border-[2px] focus:border-primaryLight
+                          transition-all text-sm w-full resize-none"
+                    />
+                  </div>
+                  <div
+                    className="relative pt-4 flex flex-col items-start 
+                        justify-center gap-1"
+                  >
+                    <label className="text-sm">Country</label>
+                    <input
+                      type="text"
+                      id={`${referee["country"]}${index}`}
+                      name={`${referee["country"]}${index}`}
+                      onChange={(event) =>
+                        refereeChangeHandler(
+                          event,
+                          index,
+                          buildRefereeFieldValue("country", index)
+                        )
+                      }
+                      value={referee[buildRefereeFieldValue("country", index)]}
+                      className="p-2 outline-none rounded border-[2px]
+                          border-gray-500 focus:border-[2px] focus:border-primaryLight
+                          transition-all text-sm w-full resize-none"
+                    />
+                  </div>
+                  <div
+                    className="relative pt-4 flex flex-col items-start 
+                        justify-center gap-1"
+                  >
+                    <label className="text-sm">Telephone</label>
+                    <input
+                      type="text"
+                      id={`${referee["telephone"]}${index}`}
+                      name={`${referee["telephone"]}${index}`}
+                      onChange={(event) =>
+                        refereeChangeHandler(
+                          event,
+                          index,
+                          buildRefereeFieldValue("telephone", index)
+                        )
+                      }
+                      value={
+                        referee[buildRefereeFieldValue("telephone", index)]
+                      }
+                      className="p-2 outline-none rounded border-[2px]
+                          border-gray-500 focus:border-[2px] focus:border-primaryLight
+                          transition-all text-sm w-full resize-none"
+                    />
+                  </div>
+                  <div
+                    className="relative pt-4 flex flex-col items-start 
+                        justify-center gap-1"
+                  >
+                    <label className="text-sm">Email</label>
+                    <input
+                      type="email"
+                      id={`${referee["email"]}${index}`}
+                      name={`${referee["email"]}${index}`}
+                      onChange={(event) =>
+                        refereeChangeHandler(
+                          event,
+                          index,
+                          buildRefereeFieldValue("email", index)
+                        )
+                      }
+                      value={referee[buildRefereeFieldValue("email", index)]}
+                      className="p-2 outline-none rounded border-[2px]
+                          border-gray-500 focus:border-[2px] focus:border-primaryLight
+                          transition-all text-sm w-full resize-none"
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+            {/* ----- Referee End -----*/}
 
             {/*----- Page Navigate buttons Start -----*/}
             <div className="mt-16 flex items-center justify-between">
