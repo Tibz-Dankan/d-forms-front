@@ -452,6 +452,8 @@ export const Section2: React.FC = () => {
   const allCategoryHandler = () => {
     employerRecordSubmitHandler();
     disabilitySubmitHandler();
+    applicantContactSubmitHandler();
+    parentGuardianSubmitHandler();
   };
 
   // EMPLOYER RECORD LOGIC
@@ -583,6 +585,61 @@ export const Section2: React.FC = () => {
 
     const sponsorProperyArray = transformToArrayOfObjects(sponsor);
     // TODO: to add more validation for sponsor here
+    // save data in storage
+  }
+
+  function parentGuardianSubmitHandler() {
+    const fatherGuardian = {
+      telephone: formik.values.fatherGuardianTelephone,
+      email: formik.values.fatherGuardianEmail,
+      POBox: formik.values.fatherGuardianPOBox,
+      town: formik.values.fatherGuardianTown,
+      country: formik.values.fatherGuardianCountry,
+    };
+    const motherGuardian = {
+      telephone: formik.values.motherGuardianCountry,
+      email: formik.values.motherGuardianEmail,
+      POBox: formik.values.motherGuardianPOBox,
+      town: formik.values.motherGuardianTown,
+      country: formik.values.motherGuardianCountry,
+    };
+    const sponsor = {
+      telephone: formik.values.sponsorTelephone,
+      email: formik.values.sponsorEmail,
+      POBox: formik.values.sponsorPOBox,
+      town: formik.values.sponsorTown,
+      country: formik.values.sponsorCountry,
+    };
+
+    saveFormDataToStorage({
+      applicationForm: "postgraduate",
+      category: "parentGuardian",
+      data: {
+        parentGuardian: {
+          fatherGuardian: fatherGuardian,
+          motherGuardian: motherGuardian,
+          sponsor: sponsor,
+        },
+      },
+      updateAt: new Date().toISOString(),
+    });
+  }
+
+  function applicantContactSubmitHandler() {
+    const applicantContact = {
+      telephone: formik.values.contactTelephone,
+      email: formik.values.contactEmail,
+      POBox: formik.values.contactPOBox,
+      town: formik.values.contactTown,
+      country: formik.values.contactCountry,
+    };
+
+    saveFormDataToStorage({
+      applicationForm: "postgraduate",
+      category: "contact",
+      data: { contact: applicantContact },
+      updateAt: new Date().toISOString(),
+    });
   }
 
   return (
