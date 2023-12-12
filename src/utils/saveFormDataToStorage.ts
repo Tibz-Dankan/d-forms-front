@@ -32,7 +32,6 @@ export const saveFormDataToStorage = (props: Props) => {
 
   //When storage is having data
   applicationFormData.updateAt = props.updateAt;
-  applicationFormData.categories = {};
   applicationFormData.categories[`${props.category}`] = props.data;
   localStorage.setItem(
     props.applicationForm,
