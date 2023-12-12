@@ -690,25 +690,6 @@ export const Section2: React.FC = () => {
                     />
                   </div>
                   <div className="flex items-center justify-center gap-4">
-                    {showInstitutionAddButton(index) && (
-                      <button
-                        className="bg-gray-300 flex items-center justify-center px-4 
-                         py-2 rounded mt-4 gap-4 text-primary w-full"
-                        onClick={() => AddInstitutionHandler()}
-                      >
-                        <span>
-                          <IconContext.Provider
-                            value={{
-                              size: "1rem",
-                              color: "#d6336c",
-                            }}
-                          >
-                            <FaPlus />
-                          </IconContext.Provider>
-                        </span>
-                        <span>Add </span>
-                      </button>
-                    )}
                     {showInstitutionRemoveButton(index) && (
                       <button
                         className="bg-gray-300 flex items-center justify-center px-4 
@@ -726,6 +707,25 @@ export const Section2: React.FC = () => {
                           </IconContext.Provider>
                         </span>
                         <span>Remove </span>
+                      </button>
+                    )}
+                    {showInstitutionAddButton(index) && (
+                      <button
+                        className="bg-gray-300 flex items-center justify-center px-4 
+                         py-2 rounded mt-4 gap-4 text-primary w-full"
+                        onClick={() => AddInstitutionHandler()}
+                      >
+                        <span>
+                          <IconContext.Provider
+                            value={{
+                              size: "1rem",
+                              color: "#d6336c",
+                            }}
+                          >
+                            <FaPlus />
+                          </IconContext.Provider>
+                        </span>
+                        <span>Add </span>
                       </button>
                     )}
                   </div>
@@ -817,25 +817,6 @@ export const Section2: React.FC = () => {
                   </div>
 
                   <div className="flex items-center justify-center gap-4">
-                    {showOtherQualificationAddButton(index) && (
-                      <button
-                        className="bg-gray-300 flex items-center justify-center px-4 
-                         py-2 rounded mt-4 gap-4 text-primary w-full"
-                        onClick={() => addOtherQualificationHandler()}
-                      >
-                        <span>
-                          <IconContext.Provider
-                            value={{
-                              size: "1rem",
-                              color: "#d6336c",
-                            }}
-                          >
-                            <FaPlus />
-                          </IconContext.Provider>
-                        </span>
-                        <span>Add </span>
-                      </button>
-                    )}
                     {showOtherQualificationRemoveButton(index) && (
                       <button
                         className="bg-gray-300 flex items-center justify-center px-4 
@@ -853,6 +834,25 @@ export const Section2: React.FC = () => {
                           </IconContext.Provider>
                         </span>
                         <span>Remove </span>
+                      </button>
+                    )}
+                    {showOtherQualificationAddButton(index) && (
+                      <button
+                        className="bg-gray-300 flex items-center justify-center px-4 
+                         py-2 rounded mt-4 gap-4 text-primary w-full"
+                        onClick={() => addOtherQualificationHandler()}
+                      >
+                        <span>
+                          <IconContext.Provider
+                            value={{
+                              size: "1rem",
+                              color: "#d6336c",
+                            }}
+                          >
+                            <FaPlus />
+                          </IconContext.Provider>
+                        </span>
+                        <span>Add </span>
                       </button>
                     )}
                   </div>
