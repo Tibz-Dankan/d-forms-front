@@ -23,13 +23,6 @@ import {
   getDataFromStorage,
 } from "../../utils/saveFormDataToStorage";
 
-type Employer = {
-  nameAddress: string;
-  designation: string;
-  from: string;
-  to: string;
-};
-
 type ContactInfo = {
   contactTelephone: string;
   contactEmail: string;
@@ -577,19 +570,19 @@ export const Section1x: React.FC = () => {
     });
   }
 
-  function validateApplicantSponsor() {
-    const sponsor = {
-      telephone: formik.values.sponsorTelephone,
-      email: formik.values.sponsorEmail,
-      POBox: formik.values.sponsorPOBox,
-      town: formik.values.sponsorTown,
-      country: formik.values.sponsorCountry,
-    };
+  // function validateApplicantSponsor() {
+  //   const sponsor = {
+  //     telephone: formik.values.sponsorTelephone,
+  //     email: formik.values.sponsorEmail,
+  //     POBox: formik.values.sponsorPOBox,
+  //     town: formik.values.sponsorTown,
+  //     country: formik.values.sponsorCountry,
+  //   };
 
-    const sponsorProperyArray = transformToArrayOfObjects(sponsor);
-    // TODO: to add more validation for sponsor here
-    // save data in storage
-  }
+  //   const sponsorProperyArray = transformToArrayOfObjects(sponsor);
+  //   // TODO: to add more validation for sponsor here
+  //   // save data in storage
+  // }
 
   function parentGuardianSubmitHandler() {
     const fatherGuardian = {
