@@ -124,8 +124,18 @@ export const Section4: React.FC = () => {
 
   const moveToNextPageHandler = () => {
     if (formHasErrors()) return;
+    declarationSubmitHandler();
     nextPageHandler();
   };
+
+  function declarationSubmitHandler() {
+    saveFormDataToStorage({
+      applicationForm: "postgraduate",
+      category: "declaration",
+      data: formik.values,
+      updateAt: new Date().toISOString(),
+    });
+  }
 
   return (
     <Fragment>

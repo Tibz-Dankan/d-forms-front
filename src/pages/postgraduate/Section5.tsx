@@ -150,9 +150,18 @@ export const Section5: React.FC = () => {
 
   const moveToNextPageHandler = () => {
     if (formHasErrors()) return;
-    // allCategorySubmitHandler();
+    recommendationSubmitHandler();
     nextPageHandler();
   };
+
+  function recommendationSubmitHandler() {
+    saveFormDataToStorage({
+      applicationForm: "postgraduate",
+      category: "officialUseRecommendation",
+      data: formik.values,
+      updateAt: new Date().toISOString(),
+    });
+  }
 
   return (
     <Fragment>
