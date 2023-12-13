@@ -27,6 +27,7 @@ module.exports = withMT({
       animation: {
         slideDown: "slideDown 0.5s ease-out forwards",
         opacityZeroToFull: "opacityZeroToFull 0.5s ease-out forwards",
+        rotate: "rotate 0.8s linear infinite",
       },
       keyframes: {
         slideDown: {
@@ -36,6 +37,10 @@ module.exports = withMT({
         opacityZeroToFull: {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
+        },
+        rotate: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
         },
       },
     },
