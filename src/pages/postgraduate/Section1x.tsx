@@ -16,12 +16,13 @@ import { useDispatch } from "react-redux";
 import { IconContext } from "react-icons";
 import { FaPlus, FaMinus } from "react-icons/fa6";
 import { IoIosArrowRoundBack, IoIosArrowRoundForward } from "react-icons/io";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { transformToArrayOfObjects } from "../../utils/transformToArrayOfObject";
 import {
   saveFormDataToStorage,
   getDataFromStorage,
 } from "../../utils/saveFormDataToStorage";
+import { useProgress } from "../../hooks/useProgress";
 
 type ContactInfo = {
   contactTelephone: string;
@@ -63,56 +64,18 @@ type InitialValues = ContactInfo & GuardianInfo & SponsorInfo & Disability;
  * Section1x component has section 1.2 to 1.4
  */
 export const Section1x: React.FC = () => {
-  const [searchParams, setSearchParams] = useSearchParams({
+  const [searchParams, _] = useSearchParams({
     page: "",
     section: "",
   });
   const dispatch: any = useDispatch();
-  const navigate: any = useNavigate();
 
-  // // Disability
-  // const disablity = {
-  //   isDisabled: false,
-  //   disabilities: {},
-  //   natureOfDisability: "",
-  // };
-  // // Contact
-  // const contact = {
-  //   telephone: null,
-  //   email: "",
-  //   POBox: "",
-  //   town: "",
-  //   country: "",
-  // };
-  // // Parents/Guardians
-  // const parentGuardianFather = {
-  //   telephone: null,
-  //   email: "",
-  //   POBox: "",
-  //   town: "",
-  //   country: "",
-  // };
-  // const parentGuardianMother = {
-  //   telephone: null,
-  //   email: "",
-  //   POBox: "",
-  //   town: "",
-  //   country: "",
-  // };
-  // const sponsor = {
-  //   telephone: null,
-  //   email: "",
-  //   POBox: "",
-  //   town: "",
-  //   country: "",
-  // };
-  // // employer
-  // const employer = {
-  //   nameAddress: "",
-  //   designation: "",
-  //   from: "",
-  //   to: "",
-  // };
+  const { prevPageHandler, nextPageHandler } = useProgress({
+    page: 2,
+    section: "1x",
+    nextPageURL: "/postgraduate/section2",
+    prevPageURL: "/postgraduate/section1",
+  });
 
   const initialValues: InitialValues = {
     isDisabled: false,
@@ -261,96 +224,12 @@ export const Section1x: React.FC = () => {
     return hasError;
   };
 
-  useEffect(() => {
-    const setDefaultSearchParams = () => {
-      setSearchParams(
-        (prev) => {
-          prev.set("page", "1");
-          prev.set("section", "1");
-          return prev;
-        },
-        { replace: true }
-      );
-      currentMaxPageHandler();
-    };
-    setDefaultSearchParams();
-  }, []);
-
   const page = searchParams.get("page");
-  const section = searchParams.get("section");
-  const currentMaxPage = searchParams.get("currMaxPage");
 
-  function currentMaxPageHandler() {
-    // if current max page is defined
-    if (!currentMaxPage) {
-      setSearchParams(
-        (prev) => {
-          prev.set("currMaxPage", "1");
-          return prev;
-        },
-        { replace: true }
-      );
-      return;
-    }
-
-    if (!page || !currentMaxPage) return;
-
-    const currPage = parseInt(page);
-    const currMaxPage = parseInt(currentMaxPage);
-    if (currPage === currMaxPage || currPage < currMaxPage) return;
-
-    const nextMaxPage = parseInt(page) + 1;
-    setSearchParams(
-      (prev) => {
-        prev.set("currMaxPage", `${nextMaxPage}`);
-        return prev;
-      },
-      { replace: true }
-    );
-  }
-
-  const nextPageHandler = () => {
-    allCategoryHandler();
-    if (!page || !section) return;
+  const moveToNextPageHandler = () => {
     if (formHasErrors()) return;
-    const nextPage = parseInt(page) + 1;
-    const nextSection = parseInt(section) + 1;
-    console.log("nextPage", nextPage);
-    console.log("nextSection", nextSection);
-
-    setSearchParams(
-      (prev) => {
-        prev.set("page", `${nextPage}`);
-        prev.set("section", `${nextSection}`);
-        return prev;
-      },
-      { replace: true }
-    );
-    currentMaxPageHandler();
-    saveFormDataToStorage({
-      applicationForm: "postgraduate",
-      category: "personalInfo",
-      data: formik.values,
-      updateAt: new Date().toISOString(),
-    });
-    navigate(`/postgraduate/section${nextPage}`, { replace: false });
-  };
-
-  const prevPageHandler = () => {
-    if (!page || !section) return;
-    if (parseInt(page) === 1) return;
-    const nextPage = parseInt(page) - 1;
-    const nextSection = parseInt(section) - 1;
-
-    setSearchParams(
-      (prev) => {
-        prev.set("page", `${nextPage}`);
-        prev.set("section", `${nextSection}`);
-        return prev;
-      },
-      { replace: true }
-    );
-    navigate(`/postgraduate/section${nextPage}`, { replace: false });
+    allCategoryHandler();
+    nextPageHandler();
   };
 
   const [disability, setDisability] = useState("");
@@ -642,7 +521,7 @@ export const Section1x: React.FC = () => {
     <Fragment>
       <div className="relative full grid place-items-center h-auto">
         <FormLayout
-          totalNumPages={6}
+          totalNumPages={7}
           headerTitleClassName="bg-primaryDark"
           headerTitle={
             <div className="w-full">
@@ -1538,7 +1417,7 @@ export const Section1x: React.FC = () => {
               <button
                 className="flex items-center justify-center bg-primary
                 rounded-md gap-2 px-4 py-2 text-gray-50"
-                onClick={() => nextPageHandler()}
+                onClick={() => moveToNextPageHandler()}
                 type="submit"
               >
                 <span>Next</span>
