@@ -16,7 +16,7 @@ let url: string;
 if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
   url = "http://localhost:8000/api/v1";
 } else {
-  url = "production backend url";
+  url = "https://d-forms-backend.onrender.com/api/v1";
 }
 
 export { url };
