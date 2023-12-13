@@ -2,6 +2,7 @@ import { progressActions } from "../index";
 import { TProgress } from "../../types/progress";
 
 export const updateProgress = ({ currentMaxPage }: TProgress) => {
+  console.log("updating.. progress");
   localStorage.setItem(
     "progress",
     JSON.stringify({ currentMaxPage: currentMaxPage })

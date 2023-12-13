@@ -126,8 +126,18 @@ export const Section3: React.FC = () => {
 
   const moveToNextPageHandler = () => {
     if (formHasErrors()) return;
+    philosophySubmitHandler();
     nextPageHandler();
   };
+
+  function philosophySubmitHandler() {
+    saveFormDataToStorage({
+      applicationForm: "postgraduate",
+      category: "christianPhilosophyAffirmation",
+      data: formik.values,
+      updateAt: new Date().toISOString(),
+    });
+  }
 
   return (
     <Fragment>

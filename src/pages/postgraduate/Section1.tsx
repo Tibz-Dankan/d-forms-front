@@ -206,6 +206,7 @@ export const Section1: React.FC = () => {
 
   const moveToNextPageHandler = () => {
     if (formHasErrors()) return;
+    allCategorySubmitHandler();
     nextPageHandler();
   };
 
@@ -259,6 +260,15 @@ export const Section1: React.FC = () => {
     // "Name of spouse",
     // "Number of children",
   ];
+
+  function allCategorySubmitHandler() {
+    saveFormDataToStorage({
+      applicationForm: "postgraduate",
+      category: "personalInfo",
+      data: formik.values,
+      updateAt: new Date().toISOString(),
+    });
+  }
 
   return (
     <Fragment>

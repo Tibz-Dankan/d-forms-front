@@ -146,6 +146,7 @@ export const Section2: React.FC = () => {
     try {
       educationBgSubmitHandler();
       otherQualificationSubmitHandler();
+      courseChoiceWorkExperience();
       refereeSubmitHandler();
     } catch (error: any) {
       dispatch(showCardNotification({ type: "error", message: error.message }));
@@ -154,6 +155,15 @@ export const Section2: React.FC = () => {
       }, 5000);
     }
   };
+
+  function courseChoiceWorkExperience() {
+    saveFormDataToStorage({
+      applicationForm: "postgraduate",
+      category: "courseChoiceWorkExperience",
+      data: formik.values,
+      updateAt: new Date().toISOString(),
+    });
+  }
 
   //   Education background
   const effectRan = useRef(false);
