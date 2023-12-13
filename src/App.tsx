@@ -12,6 +12,7 @@ import { TNotificationState } from "./types/notification";
 import "./App.css";
 import { EmploymentRouteController } from "./pages/employment/EmploymentRouteController";
 import { PostgraduateRouteController } from "./pages/postgraduate/PostgraduateRouteController";
+import { updateProgress } from "./store/actions/progress";
 
 const App: React.FC = () => {
   const dispatch: any = useDispatch();
@@ -19,6 +20,23 @@ const App: React.FC = () => {
   const notification = useSelector(
     (state: TNotificationState) => state.notification
   );
+
+  useEffect(() => {
+    const tryUpdateProgress = () => {
+      const stringifiedProgress = localStorage.getItem("progress");
+      const parsedProgress =
+        stringifiedProgress && JSON.parse(stringifiedProgress);
+
+      if (!parsedProgress) return;
+
+      console.log("parsedProgress", parsedProgress);
+      const { currentMaxPage } = parsedProgress;
+
+      if (!currentMaxPage) return;
+      dispatch(updateProgress({ currentMaxPage: currentMaxPage }));
+    };
+    tryUpdateProgress();
+  }, [dispatch]);
 
   const closeCardHandler = () => {
     dispatch(hideCardNotification());

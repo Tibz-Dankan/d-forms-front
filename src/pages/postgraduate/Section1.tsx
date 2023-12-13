@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import { FormLayout } from "../../layout/FormLayout";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -9,13 +9,14 @@ import {
 import { useDispatch } from "react-redux";
 import { IconContext } from "react-icons";
 import { IoIosArrowRoundBack, IoIosArrowRoundForward } from "react-icons/io";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { transformToArrayOfObjects } from "../../utils/transformToArrayOfObject";
 import {
   saveFormDataToStorage,
   getDataFromStorage,
 } from "../../utils/saveFormDataToStorage";
 import { Select, Option } from "@material-tailwind/react";
+import { useProgress } from "../../hooks/useProgress";
 
 type TMaritalStatus = {};
 
@@ -38,12 +39,18 @@ type TInitialValues = {
 };
 
 export const Section1: React.FC = () => {
-  const [searchParams, setSearchParams] = useSearchParams({
+  const [searchParams, _] = useSearchParams({
     page: "",
     section: "",
   });
   const dispatch: any = useDispatch();
-  const navigate: any = useNavigate();
+
+  const { prevPageHandler, nextPageHandler } = useProgress({
+    page: 1,
+    section: "1",
+    nextPageURL: "/postgraduate/section1x",
+    prevPageURL: "/postgraduate/section1",
+  });
 
   const initialValues: TInitialValues = {
     intake: "",
@@ -195,95 +202,11 @@ export const Section1: React.FC = () => {
     return hasError;
   };
 
-  useEffect(() => {
-    const setDefaultSearchParams = () => {
-      setSearchParams(
-        (prev) => {
-          prev.set("page", "1");
-          prev.set("section", "1");
-          return prev;
-        },
-        { replace: true }
-      );
-      currentMaxPageHandler();
-    };
-    setDefaultSearchParams();
-  }, []);
-
   const page = searchParams.get("page");
-  const section = searchParams.get("section");
-  const currentMaxPage = searchParams.get("currMaxPage");
 
-  function currentMaxPageHandler() {
-    // if current max page is defined
-    if (!currentMaxPage) {
-      setSearchParams(
-        (prev) => {
-          prev.set("currMaxPage", "1");
-          return prev;
-        },
-        { replace: true }
-      );
-      return;
-    }
-
-    if (!page || !currentMaxPage) return;
-
-    const currPage = parseInt(page);
-    const currMaxPage = parseInt(currentMaxPage);
-    if (currPage === currMaxPage || currPage < currMaxPage) return;
-
-    const nextMaxPage = parseInt(page) + 1;
-    setSearchParams(
-      (prev) => {
-        prev.set("currMaxPage", `${nextMaxPage}`);
-        return prev;
-      },
-      { replace: true }
-    );
-  }
-
-  const nextPageHandler = () => {
-    if (!page || !section) return;
+  const moveToNextPageHandler = () => {
     if (formHasErrors()) return;
-    const nextPage = parseInt(page) + 1;
-    const nextSection = parseInt(section) + 1;
-    console.log("nextPage", nextPage);
-    console.log("nextSection", nextSection);
-
-    setSearchParams(
-      (prev) => {
-        prev.set("page", `${nextPage}`);
-        prev.set("section", `${nextSection}`);
-        return prev;
-      },
-      { replace: true }
-    );
-    currentMaxPageHandler();
-    saveFormDataToStorage({
-      applicationForm: "postgraduate",
-      category: "personalInfo",
-      data: formik.values,
-      updateAt: new Date().toISOString(),
-    });
-    navigate(`/postgraduate/section1x`, { replace: false });
-  };
-
-  const prevPageHandler = () => {
-    if (!page || !section) return;
-    if (parseInt(page) === 1) return;
-    const nextPage = parseInt(page) - 1;
-    const nextSection = parseInt(section) - 1;
-
-    setSearchParams(
-      (prev) => {
-        prev.set("page", `${nextPage}`);
-        prev.set("section", `${nextSection}`);
-        return prev;
-      },
-      { replace: true }
-    );
-    navigate(`/postgraduate/section${nextPage}`, { replace: false });
+    nextPageHandler();
   };
 
   const onIntakeChangeHandler = (selectedDate: any) => {
@@ -341,7 +264,7 @@ export const Section1: React.FC = () => {
     <Fragment>
       <div className="relative full grid place-items-center h-auto">
         <FormLayout
-          totalNumPages={6}
+          totalNumPages={7}
           headerTitleClassName="bg-primaryDark"
           headerTitle={
             <div className="w-full">
@@ -421,7 +344,7 @@ export const Section1: React.FC = () => {
                 className="text-gray-50 font-semibold inline-block
                bg-primaryDark px-4 py-2 rounded"
               >
-                SECTION 1:
+                SECTION 1
               </p>
               <div
                 className="relative pt-4 flex flex-col items-start 
@@ -793,7 +716,7 @@ export const Section1: React.FC = () => {
               <button
                 className="flex items-center justify-center bg-primary
                 rounded-md gap-2 px-4 py-2 text-gray-50"
-                onClick={() => nextPageHandler()}
+                onClick={() => moveToNextPageHandler()}
                 type="submit"
               >
                 <span>Next</span>

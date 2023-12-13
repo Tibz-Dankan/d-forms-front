@@ -209,7 +209,7 @@ export const Section2: React.FC = () => {
           }
           section="section 2"
           footer="Employment footer"
-          totalNumPages={6}
+          totalNumPages={7}
         >
           <form className="w-full">
             {/* Personal Eduaction */}
