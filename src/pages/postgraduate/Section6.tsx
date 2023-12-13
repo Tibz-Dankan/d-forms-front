@@ -1,10 +1,4 @@
-import React, {
-  Fragment,
-  useEffect,
-  ChangeEvent,
-  useState,
-  useRef,
-} from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { FormLayout } from "../../layout/FormLayout";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -27,7 +21,7 @@ type InitialValues = {
 };
 
 /**
- * Section1x component has section 1.2 to 1.4
+ * Section6 component has section 6 to 7
  */
 export const Section6: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams({
