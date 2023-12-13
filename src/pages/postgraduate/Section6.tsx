@@ -34,7 +34,7 @@ export const Section6: React.FC = () => {
   const { prevPageHandler, nextPageHandler } = useProgress({
     page: 7,
     section: "6",
-    nextPageURL: "/postgraduate/section6",
+    nextPageURL: "/postgraduate/section-submit",
     prevPageURL: "/postgraduate/section5",
   });
 
