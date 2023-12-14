@@ -13,6 +13,7 @@ import "./App.css";
 import { EmploymentRouteController } from "./pages/employment/EmploymentRouteController";
 import { PostgraduateRouteController } from "./pages/postgraduate/PostgraduateRouteController";
 import { DashboardRouteController } from "./pages/dashboard/DashboardRouteController";
+import { PromotionRouteController } from "./pages/promotion/PromotionRouteController";
 import { updateProgress } from "./store/actions/progress";
 
 const App: React.FC = () => {
@@ -70,6 +71,7 @@ const App: React.FC = () => {
               path="/employment/*"
               element={<EmploymentRouteController />}
             />
+            <Route path="/promotion/*" element={<PromotionRouteController />} />
             <Route path="/dashboard/*" element={<DashboardRouteController />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
