@@ -468,9 +468,9 @@ export const Section1: React.FC = () => {
             {/*----- Personal Information End -----*/}
 
             {/*----- Page Navigate buttons Start -----*/}
-            <div className="mt-16 flex items-center justify-between">
+            <div className="mt-32 flex items-center justify-between">
               <button
-                className="flex items-center justify-center bg-primary
+                className="flex items-center justify-center bg-primaryDark
                 rounded-md gap-2 px-4 py-2 text-gray-50"
                 onClick={() => prevPageHandler()}
                 disabled={page === "1"}
@@ -488,13 +488,13 @@ export const Section1: React.FC = () => {
                 <span>Prev</span>
               </button>
               <p
-                className="w-10 h-10 rounded-[50%] bg-primary grid
-               place-items-center text-gray-50 font-semibolds text-lgs"
+                className="w-10 h-10 rounded-[50%] bg-primaryDark grid
+                 place-items-center text-gray-50"
               >
                 <span>{page}</span>
               </p>
               <button
-                className="flex items-center justify-center bg-primary
+                className="flex items-center justify-center bg-primaryDark
                 rounded-md gap-2 px-4 py-2 text-gray-50"
                 onClick={() => moveToNextPageHandler()}
                 type="submit"
