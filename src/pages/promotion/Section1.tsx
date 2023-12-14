@@ -41,8 +41,8 @@ export const Section1: React.FC = () => {
   const { prevPageHandler, nextPageHandler } = useProgress({
     page: 1,
     section: "1",
-    nextPageURL: "/postgraduate/section1x",
-    prevPageURL: "/postgraduate/section1",
+    nextPageURL: "/promotion/section2",
+    prevPageURL: "/promotion/section1",
   });
 
   const initialValues: TInitialValues = {
