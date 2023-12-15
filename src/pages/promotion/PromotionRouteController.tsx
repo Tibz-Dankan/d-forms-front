@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { Section1 } from "./Section1";
 import { Section2 } from "./Section2";
 import { Section3 } from "./Section3";
+import { Section4 } from "./Section4";
 
 import { Routes, Route } from "react-router-dom";
 
@@ -18,9 +19,14 @@ export const PromotionRouteController: React.FC = () => {
       path: "/section2",
     },
     {
-      page: 2,
+      page: 3,
       element: <Section3 />,
       path: "/Section3",
+    },
+    {
+      page: 4,
+      element: <Section4 />,
+      path: "/Section4",
     },
   ];
 
