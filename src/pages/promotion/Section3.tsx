@@ -52,7 +52,9 @@ export const Section3: React.FC = () => {
   const formik = useFormik({
     initialValues: getInitialValues(),
     validationSchema: Yup.object({
-      campus: Yup.string().max(1000).required("Campus name is required"),
+      statementOfFaithAndUnderstandingChristian: Yup.string()
+        .max(1000)
+        .required("This field is required"),
     }),
 
     onSubmit: async (values, helpers) => {
