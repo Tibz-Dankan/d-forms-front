@@ -24,14 +24,7 @@ import {
 } from "../../utils/saveFormDataToStorage";
 import { useProgress } from "../../hooks/useProgress";
 
-type TInitialValues = {
-  //   campus: string;
-  //   faculty: string;
-  //   department: string;
-  //   currentPosition: string;
-  //   promotionPosition: string;
-  //   contractExpiryDate: string;
-};
+type TInitialValues = {};
 
 export const Section4: React.FC = () => {
   const [searchParams, _] = useSearchParams({
@@ -41,20 +34,13 @@ export const Section4: React.FC = () => {
   const dispatch: any = useDispatch();
 
   const { prevPageHandler, nextPageHandler } = useProgress({
-    page: 2,
-    section: "2",
-    nextPageURL: "/promotion/section3",
-    prevPageURL: "/promotion/section1",
+    page: 4,
+    section: "4",
+    nextPageURL: "/promotion/section5",
+    prevPageURL: "/promotion/section3",
   });
 
-  const initialValues: TInitialValues = {
-    // campus: "",
-    // faculty: "",
-    // department: "",
-    // currentPosition: "",
-    // promotionPosition: "",
-    // contractExpiryDate: "",
-  };
+  const initialValues: TInitialValues = {};
 
   const getInitialValues = (): TInitialValues => {
     const valuesFromStorage = getDataFromStorage({
