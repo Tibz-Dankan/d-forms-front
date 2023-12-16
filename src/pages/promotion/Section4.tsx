@@ -149,7 +149,6 @@ export const Section4: React.FC = () => {
 
   const buildInstitution = (index: number) => {
     const instituition: any = {};
-    instituition[`${index}`] = "";
     instituition[`instituitionName${index}`] = "";
     instituition[`from${index}`] = "";
     instituition[`to${index}`] = "";
