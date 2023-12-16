@@ -5,6 +5,7 @@ import { Section3 } from "./Section3";
 import { Section4 } from "./Section4";
 import { Section5 } from "./Section5";
 import { Section6 } from "./Section6";
+import { Section7 } from "./Section7";
 
 import { Routes, Route } from "react-router-dom";
 
@@ -39,6 +40,11 @@ export const PromotionRouteController: React.FC = () => {
       page: 6,
       element: <Section6 />,
       path: "/Section6",
+    },
+    {
+      page: 7,
+      element: <Section7 />,
+      path: "/Section7",
     },
   ];
 
