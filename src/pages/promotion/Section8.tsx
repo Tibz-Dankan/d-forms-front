@@ -34,10 +34,10 @@ export const Section8: React.FC = () => {
   const dispatch: any = useDispatch();
 
   const { prevPageHandler, nextPageHandler } = useProgress({
-    page: 2,
-    section: "2",
-    nextPageURL: "/promotion/section3",
-    prevPageURL: "/promotion/section1",
+    page: 8,
+    section: "8",
+    nextPageURL: "/promotion/section9",
+    prevPageURL: "/promotion/section7",
   });
 
   const initialValues: TInitialValues = {
