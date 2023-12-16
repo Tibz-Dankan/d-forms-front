@@ -26,7 +26,7 @@ import { useProgress } from "../../hooks/useProgress";
 
 type TInitialValues = {};
 
-export const Section5: React.FC = () => {
+export const Section6: React.FC = () => {
   const [searchParams, _] = useSearchParams({
     page: "",
     section: "",
@@ -34,10 +34,10 @@ export const Section5: React.FC = () => {
   const dispatch: any = useDispatch();
 
   const { prevPageHandler, nextPageHandler } = useProgress({
-    page: 5,
-    section: "5",
-    nextPageURL: "/promotion/section6",
-    prevPageURL: "/promotion/section4",
+    page: 6,
+    section: "6",
+    nextPageURL: "/promotion/section7",
+    prevPageURL: "/promotion/section5",
   });
 
   const initialValues: TInitialValues = {};
@@ -45,7 +45,7 @@ export const Section5: React.FC = () => {
   const getInitialValues = (): TInitialValues => {
     const valuesFromStorage = getDataFromStorage({
       applicationForm: "promotion",
-      category: "professionalBody",
+      category: "publications",
     }) as TInitialValues;
 
     if (!valuesFromStorage) return initialValues;
@@ -105,37 +105,37 @@ export const Section5: React.FC = () => {
   };
 
   function allCategorySubmitHandler() {
-    professionalBodySubmitHandler();
+    publicationSubmitHandler();
   }
 
   // Education background
   const effectRan = useRef(false);
-  const [professionalBodyArray, setProfessionalBodyArray] = useState<any[]>([]);
+  const [publicationArray, setPublicationArray] = useState<any[]>([]);
 
   const buildProfessionalBody = (index: number) => {
-    const professionalBody: any = {};
-    professionalBody[`body${index}`] = "";
+    const publication: any = {};
+    publication[`publication${index}`] = "";
 
-    return professionalBody;
+    return publication;
   };
 
-  const buildProfessionalFieldValue = (fieldName: string, index: number) => {
+  const buildPublicationFieldValue = (fieldName: string, index: number) => {
     return `${fieldName}${index}`;
   };
 
   useEffect(() => {
     if (effectRan.current === false) {
-      const constructProfessionalBodyFieldCount = () => {
-        if (professionalBodyArray[0]) return;
+      const constructPublicationFieldCount = () => {
+        if (publicationArray[0]) return;
 
-        for (let index = 0; index < 2; index++) {
-          setProfessionalBodyArray((employers) => [
-            ...employers,
+        for (let index = 0; index < 3; index++) {
+          setPublicationArray((publications) => [
+            ...publications,
             buildProfessionalBody(index),
           ]);
         }
       };
-      constructProfessionalBodyFieldCount();
+      constructPublicationFieldCount();
 
       return () => {
         effectRan.current = true;
@@ -143,39 +143,40 @@ export const Section5: React.FC = () => {
     }
   }, []);
 
-  const AddProfessionalBodyHandler = () => {
-    const currentMaxBodyArrayIndex: number = professionalBodyArray.length - 1;
-    const incrementedBodyArrayIndex: number = currentMaxBodyArrayIndex + 1;
-    setProfessionalBodyArray((bodies) => [
+  const AddPublicationHandler = () => {
+    const currentMaxPublicationArrayIndex: number = publicationArray.length - 1;
+    const incrementedPublicationArrayIndex: number =
+      currentMaxPublicationArrayIndex + 1;
+    setPublicationArray((bodies) => [
       ...bodies,
-      buildProfessionalBody(incrementedBodyArrayIndex),
+      buildProfessionalBody(incrementedPublicationArrayIndex),
     ]);
   };
 
-  const removeProfessionalBodyHandler = () => {
-    const lastBodyIndex: number = professionalBodyArray.length - 1;
-    if (lastBodyIndex <= 1) return;
+  const removePublicationHandler = () => {
+    const lastPublicationIndex: number = publicationArray.length - 1;
+    if (lastPublicationIndex <= 1) return;
 
-    const reducedBodyArray = professionalBodyArray.filter(
-      (_, index) => index !== lastBodyIndex
+    const reducedPublicationArray = publicationArray.filter(
+      (_, index) => index !== lastPublicationIndex
     );
-    setProfessionalBodyArray(() => reducedBodyArray);
+    setPublicationArray(() => reducedPublicationArray);
   };
 
-  const showBodyAddButton = (index: number) => {
-    return index === professionalBodyArray.length - 1;
+  const showPublicationAddButton = (index: number) => {
+    return index === publicationArray.length - 1;
   };
 
-  const showBodyRemoveButton = (index: number) => {
-    const canShowBodyRemoveButton: boolean = professionalBodyArray.length > 2;
-    const isLastBodyArrayIndex = index === professionalBodyArray.length - 1;
+  const showPublicationRemoveButton = (index: number) => {
+    const canShowBodyRemoveButton: boolean = publicationArray.length > 2;
+    const isLastBodyArrayIndex = index === publicationArray.length - 1;
     const showRemoveButton: boolean =
       canShowBodyRemoveButton && isLastBodyArrayIndex;
 
     return showRemoveButton;
   };
 
-  const professionalBodyFieldsChangeHandler = (
+  const publicationFieldsChangeHandler = (
     event: ChangeEvent<HTMLInputElement>,
     fieldIndex: number,
     fieldName: string
@@ -183,7 +184,7 @@ export const Section5: React.FC = () => {
     const value = event.target.value;
     const mutatedInstitutionArray: any[] = [];
 
-    professionalBodyArray.map((employer: any, index: number) => {
+    publicationArray.map((employer: any, index: number) => {
       if (index === fieldIndex) {
         employer[fieldName] = value;
         mutatedInstitutionArray.push(employer);
@@ -191,26 +192,26 @@ export const Section5: React.FC = () => {
       }
       mutatedInstitutionArray.push(employer);
     });
-    setProfessionalBodyArray(() => mutatedInstitutionArray);
+    setPublicationArray(() => mutatedInstitutionArray);
   };
 
-  function professionalBodySubmitHandler() {
-    const profBodyArray = transformToArrayOfObjects(professionalBodyArray[0]);
-    console.log("firstInstitutionArray", profBodyArray);
+  function publicationSubmitHandler() {
+    const pubArray = transformToArrayOfObjects(publicationArray[0]);
+    console.log("firstPublicationArray", pubArray);
 
-    for (let i = 0; i < profBodyArray.length; i++) {
-      const key = extractItemKey(profBodyArray[i]);
-      console.log("education extracted key", key);
+    for (let i = 0; i < pubArray.length; i++) {
+      const key = extractItemKey(pubArray[i]);
+      console.log("publication extracted key", key);
 
-      if (profBodyArray[i][key]) continue;
+      if (pubArray[i][key]) continue;
 
-      throw new Error("Please fill all fields of education");
+      throw new Error("Please fill all fields of publication");
     }
 
     saveFormDataToStorage({
       applicationForm: "promotion",
-      category: "professionalBody",
-      data: { institutions: professionalBodyArray },
+      category: "publication",
+      data: { publications: publicationArray },
       updateAt: new Date().toISOString(),
     });
   }
@@ -240,67 +241,69 @@ export const Section5: React.FC = () => {
             <div className="mb-4 mt-8">
               <p
                 className="text-gray-50 font-semibold inline-block
-                 bg-primaryDark px-4 py-2 rounded uppercase"
+                   bg-primaryDark px-4 py-2 rounded uppercase"
               >
-                Membership in professional bodies
+                Publications
               </p>
             </div>
             <div className="mb-4 mt-8">
               <p
                 className="text-gray-800 inline-block
-                  rounded bg-gray-400 p-4"
+                    rounded bg-gray-400 p-4"
               >
-                List membership of professional bodies and activities in civic,
-                public or international affairs
+                List and attach a minimum of three significant publications
+                completed since appointment or last promotion.
               </p>
             </div>
             {/*----- professional body Start -----*/}
-            {professionalBodyArray.map((institution, index) => (
+            {publicationArray.map((publication, index) => (
               <div key={index}>
                 <div className="mb-4 mt-8">
                   <p
                     className="text-gray-800 inline-block
-                  rounded bg-gray-400 px-4 py-2 font-semibold"
+                    rounded bg-gray-400 px-4 py-2 font-semibold"
                   >
-                    Body {index + 1}
+                    Publication {index + 1}
                   </p>
                 </div>
                 <div className="grid grid-cols-1">
                   <div
                     className="relative pt-4 flex flex-col items-start 
-                    justify-center gap-1"
+                      justify-center gap-1"
                   >
                     <label htmlFor="intake" className="text-sm">
                       Name of body and activities
                     </label>
                     <input
                       type="text"
-                      id={`${institution["body"]}${index}`}
-                      name={`${institution["body"]}${index}`}
+                      id={`${publication["publication"]}${index}`}
+                      name={`${publication["publication"]}${index}`}
                       onChange={(event) =>
-                        professionalBodyFieldsChangeHandler(
+                        publicationFieldsChangeHandler(
                           event,
                           index,
-                          buildProfessionalFieldValue("body", index)
+                          buildPublicationFieldValue("publication", index)
                         )
                       }
                       value={
-                        institution[buildProfessionalFieldValue("body", index)]
+                        publication[
+                          buildPublicationFieldValue("publication", index)
+                        ]
                       }
                       className="p-2 outline-none rounded border-[2px]
-                            border-gray-500 focus:border-[2px] focus:border-primaryLight
-                            transition-all text-sm w-full resize-none"
+                              border-gray-500 focus:border-[2px] focus:border-primaryLight
+                              transition-all text-sm w-full resize-none"
                     />
                   </div>
                 </div>
                 {/*----- professional body End -----*/}
 
                 <div className="flex items-center justify-center gap-4">
-                  {showBodyRemoveButton(index) && (
+                  {showPublicationRemoveButton(index) && (
                     <button
                       className="bg-gray-300 flex items-center justify-center px-4 
-                            py-2 rounded mt-4 gap-4 text-primary w-full"
-                      onClick={() => removeProfessionalBodyHandler()}
+                              py-2 rounded mt-4 gap-4 text-primary w-full"
+                      onClick={() => removePublicationHandler()}
                     >
                       <span>
                         <IconContext.Provider
@@ -315,11 +318,11 @@ export const Section5: React.FC = () => {
                       <span>Remove </span>
                     </button>
                   )}
-                  {showBodyAddButton(index) && (
+                  {showPublicationAddButton(index) && (
                     <button
                       className="bg-gray-300 flex items-center justify-center px-4 
-                           py-2 rounded mt-4 gap-4 text-primary w-full"
-                      onClick={() => AddProfessionalBodyHandler()}
+                             py-2 rounded mt-4 gap-4 text-primary w-full"
+                      onClick={() => AddPublicationHandler()}
                     >
                       <span>
                         <IconContext.Provider
@@ -342,7 +345,7 @@ export const Section5: React.FC = () => {
             <div className="mt-32 flex items-center justify-between">
               <button
                 className="flex items-center justify-center bg-primaryDark
-                  rounded-md gap-2 px-4 py-2 text-gray-50"
+                    rounded-md gap-2 px-4 py-2 text-gray-50"
                 onClick={() => prevPageHandler()}
                 disabled={page === "1"}
               >
@@ -360,13 +363,13 @@ export const Section5: React.FC = () => {
               </button>
               <p
                 className="w-10 h-10 rounded-[50%] bg-primaryDark grid
-                   place-items-center text-gray-50"
+                     place-items-center text-gray-50"
               >
                 <span>{page}</span>
               </p>
               <button
                 className="flex items-center justify-center bg-primaryDark
-                  rounded-md gap-2 px-4 py-2 text-gray-50"
+                    rounded-md gap-2 px-4 py-2 text-gray-50"
                 onClick={() => moveToNextPageHandler()}
                 type="submit"
               >
