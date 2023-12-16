@@ -176,7 +176,7 @@ export const Section8: React.FC = () => {
               </h1>
             </div>
           }
-          section="section 2"
+          section="section 8"
           footer="Promotion footer"
         >
           <form className="w-full" onSubmit={formik.handleSubmit}>
