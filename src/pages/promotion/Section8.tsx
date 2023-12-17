@@ -319,6 +319,14 @@ export const Section8: React.FC = () => {
             </div>
 
             {/*----- Gross Start ------*/}
+            <div className="mb-0 mt-8">
+              <p
+                className="text-gray-800 font-semibolds inline-block
+                 bg-gray-400  px-4 py-2 rounded"
+              >
+                Total annual remuneration
+              </p>
+            </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div
                 className="relative pt-4 flex flex-col items-start 
@@ -330,7 +338,7 @@ export const Section8: React.FC = () => {
                       {formik.errors.currentPosition}
                     </p>
                   )}
-                <label className="text-sm">Start gross</label>
+                <label className="text-sm">Starting (gross)</label>
                 <input
                   type="number"
                   required
@@ -355,7 +363,7 @@ export const Section8: React.FC = () => {
                       {formik.errors.currentPosition}
                     </p>
                   )}
-                <label className="text-sm">Most recent gross</label>
+                <label className="text-sm">Most recent (gross)</label>
                 <input
                   type="number"
                   required
@@ -650,6 +658,14 @@ export const Section8: React.FC = () => {
             </div>
 
             {/*----- Gross Start ------*/}
+            <div className="mb-0 mt-8">
+              <p
+                className="text-gray-800 font-semibolds inline-block
+                 bg-gray-400  px-4 py-2 rounded"
+              >
+                Total annual remuneration
+              </p>
+            </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div
                 className="relative pt-4 flex flex-col items-start 
@@ -661,7 +677,7 @@ export const Section8: React.FC = () => {
                       {formik.errors.currentPosition}
                     </p>
                   )}
-                <label className="text-sm">Start gross</label>
+                <label className="text-sm">Starting (gross)</label>
                 <input
                   type="number"
                   required
@@ -686,7 +702,7 @@ export const Section8: React.FC = () => {
                       {formik.errors.currentPosition}
                     </p>
                   )}
-                <label className="text-sm">Most recent gross</label>
+                <label className="text-sm">Most recent (gross)</label>
                 <input
                   type="number"
                   required
