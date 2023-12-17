@@ -8,6 +8,7 @@ import { Section6 } from "./Section6";
 import { Section7 } from "./Section7";
 import { Section8 } from "./Section8";
 import { Section9 } from "./Section9";
+import { SectionSubmit } from "./SectionSubmit";
 
 import { Routes, Route } from "react-router-dom";
 
@@ -57,6 +58,11 @@ export const PromotionRouteController: React.FC = () => {
       page: 9,
       element: <Section9 />,
       path: "/Section9",
+    },
+    {
+      page: 10,
+      element: <SectionSubmit />,
+      path: "/section-submit",
     },
   ];
 
