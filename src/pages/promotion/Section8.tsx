@@ -18,12 +18,32 @@ import {
 import { useProgress } from "../../hooks/useProgress";
 
 type TInitialValues = {
-  campus: string;
-  faculty: string;
-  department: string;
-  currentPosition: string;
-  promotionPosition: string;
-  contractExpiryDate: string;
+  presentEmploymentFromDate: string;
+  presentEmploymentToDate: string;
+  presentEmploymentPost: string;
+  presentEmploymentSupervisor: string;
+  presentEmploymentEmployeesSupervisedBy: string;
+  presentEmploymentStartingGross: string;
+  presentEmploymentMostRecentGross: string;
+  presentEmploymentTax: string;
+  presentEmploymentNet: string;
+  presentEmploymentNameAndAddressOfEmployer: string;
+  presentEmploymentBusinessType: string;
+  presentEmploymentDutyDescription: string;
+  presentEmploymentReasonsForLeaving: string;
+  previousEmploymentFromDate: string;
+  previousEmploymentToDate: string;
+  previousEmploymentPost: string;
+  previousEmploymentSupervisor: string;
+  previousEmploymentEmployeesSupervisedBy: string;
+  previousEmploymentStartingGross: string;
+  previousEmploymentMostRecentGross: string;
+  previousEmploymentTax: string;
+  previousEmploymentNet: string;
+  previousEmploymentNameAndAddressOfEmployer: string;
+  previousEmploymentBusinessType: string;
+  previousEmploymentDutyDescription: string;
+  previousEmploymentReasonsForLeaving: string;
 };
 
 export const Section8: React.FC = () => {
@@ -41,18 +61,38 @@ export const Section8: React.FC = () => {
   });
 
   const initialValues: TInitialValues = {
-    campus: "",
-    faculty: "",
-    department: "",
-    currentPosition: "",
-    promotionPosition: "",
-    contractExpiryDate: "",
+    presentEmploymentFromDate: "",
+    presentEmploymentToDate: "",
+    presentEmploymentPost: "",
+    presentEmploymentSupervisor: "",
+    presentEmploymentEmployeesSupervisedBy: "",
+    presentEmploymentStartingGross: "",
+    presentEmploymentMostRecentGross: "",
+    presentEmploymentTax: "",
+    presentEmploymentNet: "",
+    presentEmploymentNameAndAddressOfEmployer: "",
+    presentEmploymentBusinessType: "",
+    presentEmploymentDutyDescription: "",
+    presentEmploymentReasonsForLeaving: "",
+    previousEmploymentFromDate: "",
+    previousEmploymentToDate: "",
+    previousEmploymentPost: "",
+    previousEmploymentSupervisor: "",
+    previousEmploymentEmployeesSupervisedBy: "",
+    previousEmploymentStartingGross: "",
+    previousEmploymentMostRecentGross: "",
+    previousEmploymentTax: "",
+    previousEmploymentNet: "",
+    previousEmploymentNameAndAddressOfEmployer: "",
+    previousEmploymentBusinessType: "",
+    previousEmploymentDutyDescription: "",
+    previousEmploymentReasonsForLeaving: "",
   };
 
   const getInitialValues = (): TInitialValues => {
     const valuesFromStorage = getDataFromStorage({
       applicationForm: "promotion",
-      category: "campus",
+      category: "employmentRecord",
     }) as TInitialValues;
 
     if (!valuesFromStorage) return initialValues;
@@ -62,17 +102,81 @@ export const Section8: React.FC = () => {
   const formik = useFormik({
     initialValues: getInitialValues(),
     validationSchema: Yup.object({
-      campus: Yup.string().max(255).required("Campus name is required"),
-      faculty: Yup.string().max(255).required("Faculty name is required"),
-      department: Yup.string()
+      presentEmploymentFromDate: Yup.string()
         .max(255)
-        .required("Department of birth is required"),
-      currentPosition: Yup.string()
+        .required("Field is required"),
+      presentEmploymentToDate: Yup.string()
         .max(255)
-        .required("current position is required"),
-      contractExpiryDate: Yup.string()
+        .required("Field is required"),
+      presentEmploymentPost: Yup.string()
         .max(255)
-        .required("Contract expiry date name is required"),
+        .required("Field is required"),
+      presentEmploymentSupervisor: Yup.string()
+        .max(255)
+        .required("Field is required"),
+      presentEmploymentEmployeesSupervisedBy: Yup.string()
+        .max(255)
+        .required("Field is required"),
+      presentEmploymentStartingGross: Yup.string()
+        .max(255)
+        .required("Field is required"),
+      presentEmploymentMostRecentGross: Yup.string()
+        .max(255)
+        .required("Field is required"),
+      presentEmploymentTax: Yup.string().max(255).required("Field is required"),
+      presentEmploymentNet: Yup.string().max(255).required("Field is required"),
+      presentEmploymentNameAndAddressOfEmployer: Yup.string()
+        .max(255)
+        .required("Field is required"),
+      presentEmploymentBusinessType: Yup.string()
+        .max(255)
+        .required("Field is required"),
+      presentEmploymentDutyDescription: Yup.string()
+        .max(255)
+        .required("Field is required"),
+      presentEmploymentReasonsForLeaving: Yup.string()
+        .max(255)
+        .required("Field is required"),
+      // previous employer start
+      previousEmploymentFromDate: Yup.string()
+        .max(255)
+        .required("Field is required"),
+      previousEmploymentToDate: Yup.string()
+        .max(255)
+        .required("Field is required"),
+      previousEmploymentPost: Yup.string()
+        .max(255)
+        .required("Field is required"),
+      previousEmploymentSupervisor: Yup.string()
+        .max(255)
+        .required("Field is required"),
+      previousEmploymentEmployeesSupervisedBy: Yup.string()
+        .max(255)
+        .required("Field is required"),
+      previousEmploymentStartingGross: Yup.string()
+        .max(255)
+        .required("Field is required"),
+      previousEmploymentMostRecentGross: Yup.string()
+        .max(255)
+        .required("Field is required"),
+      previousEmploymentTax: Yup.string()
+        .max(255)
+        .required("Field is required"),
+      previousEmploymentNet: Yup.string()
+        .max(255)
+        .required("Field is required"),
+      previousEmploymentNameAndAddressOfEmployer: Yup.string()
+        .max(255)
+        .required("Field is required"),
+      previousEmploymentBusinessType: Yup.string()
+        .max(255)
+        .required("Field is required"),
+      previousEmploymentDutyDescription: Yup.string()
+        .max(255)
+        .required("Field is required"),
+      previousEmploymentReasonsForLeaving: Yup.string()
+        .max(255)
+        .required("Field is required"),
     }),
 
     onSubmit: async (values, helpers) => {
@@ -81,7 +185,7 @@ export const Section8: React.FC = () => {
         // Save Personal Information
         saveFormDataToStorage({
           applicationForm: "promotion",
-          category: "campus",
+          category: "employmentRecord",
           data: values,
           updateAt: new Date().toISOString(),
         });
@@ -119,24 +223,24 @@ export const Section8: React.FC = () => {
     });
 
     // Validate for empty field values
-    if (
-      !formik.values.campus ||
-      !formik.values.faculty ||
-      !formik.values.department ||
-      !formik.values.currentPosition ||
-      !formik.values.promotionPosition ||
-      !formik.values.contractExpiryDate
-    ) {
-      dispatch(
-        showCardNotification({
-          type: "error",
-          message: "Please check form for errors",
-        })
-      );
-      setTimeout(() => {
-        dispatch(hideCardNotification());
-      }, 5000);
-      hasError = true;
+    const values: any[] = transformToArrayOfObjects(formik.values);
+
+    for (let i = 0; i < values.length; i++) {
+      const key: string = extractItemKey(values[i]);
+      console.log("key of the value ->", key);
+      if (!values[i][key]) {
+        dispatch(
+          showCardNotification({
+            type: "error",
+            message: "Please check form for errors",
+          })
+        );
+        setTimeout(() => {
+          dispatch(hideCardNotification());
+        }, 5000);
+        hasError = true;
+        break;
+      }
     }
 
     return hasError;
@@ -153,7 +257,7 @@ export const Section8: React.FC = () => {
   function allCategorySubmitHandler() {
     saveFormDataToStorage({
       applicationForm: "promotion",
-      category: "campus",
+      category: "employmentRecord",
       data: formik.values,
       updateAt: new Date().toISOString(),
     });
@@ -203,19 +307,20 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.faculty && formik.touched.faculty && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.faculty}
-                  </p>
-                )}
+                {formik.errors.presentEmploymentFromDate &&
+                  formik.touched.presentEmploymentFromDate && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.presentEmploymentFromDate}
+                    </p>
+                  )}
                 <label className="text-sm">From</label>
                 <input
-                  type="text"
-                  id="faculty"
+                  type="month"
+                  id="presentEmploymentFromDate"
                   required
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.faculty}
+                  value={formik.values.presentEmploymentFromDate}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -225,19 +330,20 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.faculty && formik.touched.faculty && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.faculty}
-                  </p>
-                )}
+                {formik.errors.presentEmploymentToDate &&
+                  formik.touched.presentEmploymentToDate && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.presentEmploymentToDate}
+                    </p>
+                  )}
                 <label className="text-sm">To</label>
                 <input
-                  type="text"
-                  id="faculty"
+                  type="month"
+                  id="presentEmploymentToDate"
                   required
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.faculty}
+                  value={formik.values.presentEmploymentToDate}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -249,19 +355,20 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.faculty && formik.touched.faculty && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.faculty}
-                  </p>
-                )}
+                {formik.errors.presentEmploymentPost &&
+                  formik.touched.presentEmploymentPost && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.presentEmploymentPost}
+                    </p>
+                  )}
                 <label className="text-sm">Exact title of your post</label>
                 <input
                   type="text"
-                  id="faculty"
+                  id="presentEmploymentPost"
                   required
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.faculty}
+                  value={formik.values.presentEmploymentPost}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -273,19 +380,20 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.department && formik.touched.department && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.department}
-                  </p>
-                )}
+                {formik.errors.presentEmploymentSupervisor &&
+                  formik.touched.presentEmploymentSupervisor && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.presentEmploymentSupervisor}
+                    </p>
+                  )}
                 <label className="text-sm">Name of supervisor</label>
                 <input
                   type="text"
                   required
-                  id="department"
+                  id="presentEmploymentSupervisor"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.department}
+                  value={formik.values.presentEmploymentSupervisor}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -295,10 +403,10 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.contractExpiryDate &&
-                  formik.touched.contractExpiryDate && (
+                {formik.errors.presentEmploymentEmployeesSupervisedBy &&
+                  formik.touched.presentEmploymentEmployeesSupervisedBy && (
                     <p className="absolute top-0 left-0 text-sm text-red-600">
-                      {formik.errors.contractExpiryDate}
+                      {formik.errors.presentEmploymentEmployeesSupervisedBy}
                     </p>
                   )}
                 <label className="text-sm">
@@ -307,10 +415,10 @@ export const Section8: React.FC = () => {
                 <input
                   type="text"
                   required
-                  id="contractExpiryDate"
+                  id="presentEmploymentEmployeesSupervisedBy"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.contractExpiryDate}
+                  value={formik.values.presentEmploymentEmployeesSupervisedBy}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -332,20 +440,20 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.currentPosition &&
-                  formik.touched.currentPosition && (
+                {formik.errors.presentEmploymentStartingGross &&
+                  formik.touched.presentEmploymentStartingGross && (
                     <p className="absolute top-0 left-0 text-sm text-red-600">
-                      {formik.errors.currentPosition}
+                      {formik.errors.presentEmploymentStartingGross}
                     </p>
                   )}
                 <label className="text-sm">Starting (gross)</label>
                 <input
                   type="number"
                   required
-                  id="currentPosition"
+                  id="presentEmploymentStartingGross"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.currentPosition}
+                  value={formik.values.presentEmploymentStartingGross}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -357,20 +465,20 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.currentPosition &&
-                  formik.touched.currentPosition && (
+                {formik.errors.presentEmploymentMostRecentGross &&
+                  formik.touched.presentEmploymentMostRecentGross && (
                     <p className="absolute top-0 left-0 text-sm text-red-600">
-                      {formik.errors.currentPosition}
+                      {formik.errors.presentEmploymentMostRecentGross}
                     </p>
                   )}
                 <label className="text-sm">Most recent (gross)</label>
                 <input
                   type="number"
                   required
-                  id="currentPosition"
+                  id="presentEmploymentMostRecentGross"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.currentPosition}
+                  value={formik.values.presentEmploymentMostRecentGross}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -381,20 +489,20 @@ export const Section8: React.FC = () => {
                   className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
                 >
-                  {formik.errors.promotionPosition &&
-                    formik.touched.promotionPosition && (
+                  {formik.errors.presentEmploymentTax &&
+                    formik.touched.presentEmploymentTax && (
                       <p className="absolute top-0 left-0 text-sm text-red-600">
-                        {formik.errors.promotionPosition}
+                        {formik.errors.presentEmploymentTax}
                       </p>
                     )}
                   <label className="text-sm">Tax</label>
                   <input
                     type="number"
                     required
-                    id="promotionPosition"
+                    id="presentEmploymentTax"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
-                    value={formik.values.promotionPosition}
+                    value={formik.values.presentEmploymentTax}
                     className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -404,20 +512,20 @@ export const Section8: React.FC = () => {
                   className="relative pt-4 flex flex-col items-start 
                    justify-center gap-1"
                 >
-                  {formik.errors.promotionPosition &&
-                    formik.touched.promotionPosition && (
+                  {formik.errors.presentEmploymentNet &&
+                    formik.touched.presentEmploymentNet && (
                       <p className="absolute top-0 left-0 text-sm text-red-600">
-                        {formik.errors.promotionPosition}
+                        {formik.errors.presentEmploymentNet}
                       </p>
                     )}
                   <label className="text-sm">Net</label>
                   <input
                     type="number"
                     required
-                    id="promotionPosition"
+                    id="presentEmploymentNet"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
-                    value={formik.values.promotionPosition}
+                    value={formik.values.presentEmploymentNet}
                     className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -432,10 +540,10 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.currentPosition &&
-                  formik.touched.currentPosition && (
+                {formik.errors.presentEmploymentNameAndAddressOfEmployer &&
+                  formik.touched.presentEmploymentNameAndAddressOfEmployer && (
                     <p className="absolute top-0 left-0 text-sm text-red-600">
-                      {formik.errors.currentPosition}
+                      {formik.errors.presentEmploymentNameAndAddressOfEmployer}
                     </p>
                   )}
                 <label className="text-sm">
@@ -444,10 +552,12 @@ export const Section8: React.FC = () => {
                 <input
                   type="text"
                   required
-                  id="currentPosition"
+                  id="presentEmploymentNameAndAddressOfEmployer"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.currentPosition}
+                  value={
+                    formik.values.presentEmploymentNameAndAddressOfEmployer
+                  }
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -457,20 +567,20 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.promotionPosition &&
-                  formik.touched.promotionPosition && (
+                {formik.errors.presentEmploymentBusinessType &&
+                  formik.touched.presentEmploymentBusinessType && (
                     <p className="absolute top-0 left-0 text-sm text-red-600">
-                      {formik.errors.promotionPosition}
+                      {formik.errors.presentEmploymentBusinessType}
                     </p>
                   )}
                 <label className="text-sm">Type of business</label>
                 <input
                   type="text"
                   required
-                  id="promotionPosition"
+                  id="presentEmploymentBusinessType"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.promotionPosition}
+                  value={formik.values.presentEmploymentBusinessType}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -483,19 +593,19 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.promotionPosition &&
-                  formik.touched.promotionPosition && (
+                {formik.errors.presentEmploymentDutyDescription &&
+                  formik.touched.presentEmploymentDutyDescription && (
                     <p className="absolute top-0 left-0 text-sm text-red-600">
-                      {formik.errors.promotionPosition}
+                      {formik.errors.presentEmploymentDutyDescription}
                     </p>
                   )}
                 <label className="text-sm">Description of your duties</label>
                 <textarea
                   required
-                  id="promotionPosition"
+                  id="presentEmploymentDutyDescription"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.promotionPosition}
+                  value={formik.values.presentEmploymentDutyDescription}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full h-28"
@@ -505,10 +615,10 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.promotionPosition &&
-                  formik.touched.promotionPosition && (
+                {formik.errors.presentEmploymentReasonsForLeaving &&
+                  formik.touched.presentEmploymentReasonsForLeaving && (
                     <p className="absolute top-0 left-0 text-sm text-red-600">
-                      {formik.errors.promotionPosition}
+                      {formik.errors.presentEmploymentReasonsForLeaving}
                     </p>
                   )}
                 <label className="text-sm">
@@ -516,10 +626,10 @@ export const Section8: React.FC = () => {
                 </label>
                 <textarea
                   required
-                  id="promotionPosition"
+                  id="presentEmploymentReasonsForLeaving"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.promotionPosition}
+                  value={formik.values.presentEmploymentReasonsForLeaving}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full h-28"
@@ -542,19 +652,20 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.faculty && formik.touched.faculty && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.faculty}
-                  </p>
-                )}
+                {formik.errors.previousEmploymentFromDate &&
+                  formik.touched.previousEmploymentFromDate && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.previousEmploymentFromDate}
+                    </p>
+                  )}
                 <label className="text-sm">From</label>
                 <input
-                  type="text"
-                  id="faculty"
+                  type="month"
+                  id="previousEmploymentFromDate"
                   required
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.faculty}
+                  value={formik.values.previousEmploymentFromDate}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -564,19 +675,20 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.faculty && formik.touched.faculty && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.faculty}
-                  </p>
-                )}
+                {formik.errors.previousEmploymentToDate &&
+                  formik.touched.previousEmploymentToDate && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.previousEmploymentToDate}
+                    </p>
+                  )}
                 <label className="text-sm">To</label>
                 <input
-                  type="text"
-                  id="faculty"
+                  type="month"
+                  id="previousEmploymentToDate"
                   required
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.faculty}
+                  value={formik.values.previousEmploymentToDate}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -588,19 +700,20 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.faculty && formik.touched.faculty && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.faculty}
-                  </p>
-                )}
+                {formik.errors.previousEmploymentPost &&
+                  formik.touched.previousEmploymentPost && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.previousEmploymentPost}
+                    </p>
+                  )}
                 <label className="text-sm">Exact title of your post</label>
                 <input
                   type="text"
-                  id="faculty"
+                  id="previousEmploymentPost"
                   required
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.faculty}
+                  value={formik.values.previousEmploymentPost}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -612,19 +725,20 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.department && formik.touched.department && (
-                  <p className="absolute top-0 left-0 text-sm text-red-600">
-                    {formik.errors.department}
-                  </p>
-                )}
+                {formik.errors.previousEmploymentSupervisor &&
+                  formik.touched.previousEmploymentSupervisor && (
+                    <p className="absolute top-0 left-0 text-sm text-red-600">
+                      {formik.errors.previousEmploymentSupervisor}
+                    </p>
+                  )}
                 <label className="text-sm">Name of supervisor</label>
                 <input
                   type="text"
                   required
-                  id="department"
+                  id="previousEmploymentSupervisor"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.department}
+                  value={formik.values.previousEmploymentSupervisor}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -634,10 +748,10 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.contractExpiryDate &&
-                  formik.touched.contractExpiryDate && (
+                {formik.errors.previousEmploymentEmployeesSupervisedBy &&
+                  formik.touched.previousEmploymentEmployeesSupervisedBy && (
                     <p className="absolute top-0 left-0 text-sm text-red-600">
-                      {formik.errors.contractExpiryDate}
+                      {formik.errors.previousEmploymentEmployeesSupervisedBy}
                     </p>
                   )}
                 <label className="text-sm">
@@ -646,10 +760,10 @@ export const Section8: React.FC = () => {
                 <input
                   type="text"
                   required
-                  id="contractExpiryDate"
+                  id="previousEmploymentEmployeesSupervisedBy"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.contractExpiryDate}
+                  value={formik.values.previousEmploymentEmployeesSupervisedBy}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -671,20 +785,20 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.currentPosition &&
-                  formik.touched.currentPosition && (
+                {formik.errors.previousEmploymentStartingGross &&
+                  formik.touched.previousEmploymentStartingGross && (
                     <p className="absolute top-0 left-0 text-sm text-red-600">
-                      {formik.errors.currentPosition}
+                      {formik.errors.previousEmploymentStartingGross}
                     </p>
                   )}
                 <label className="text-sm">Starting (gross)</label>
                 <input
                   type="number"
                   required
-                  id="currentPosition"
+                  id="previousEmploymentStartingGross"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.currentPosition}
+                  value={formik.values.previousEmploymentStartingGross}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -696,20 +810,20 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.currentPosition &&
-                  formik.touched.currentPosition && (
+                {formik.errors.previousEmploymentMostRecentGross &&
+                  formik.touched.previousEmploymentMostRecentGross && (
                     <p className="absolute top-0 left-0 text-sm text-red-600">
-                      {formik.errors.currentPosition}
+                      {formik.errors.previousEmploymentMostRecentGross}
                     </p>
                   )}
                 <label className="text-sm">Most recent (gross)</label>
                 <input
                   type="number"
                   required
-                  id="currentPosition"
+                  id="previousEmploymentMostRecentGross"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.currentPosition}
+                  value={formik.values.previousEmploymentMostRecentGross}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -720,20 +834,20 @@ export const Section8: React.FC = () => {
                   className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
                 >
-                  {formik.errors.promotionPosition &&
-                    formik.touched.promotionPosition && (
+                  {formik.errors.previousEmploymentTax &&
+                    formik.touched.previousEmploymentTax && (
                       <p className="absolute top-0 left-0 text-sm text-red-600">
-                        {formik.errors.promotionPosition}
+                        {formik.errors.previousEmploymentTax}
                       </p>
                     )}
                   <label className="text-sm">Tax</label>
                   <input
                     type="number"
                     required
-                    id="promotionPosition"
+                    id="previousEmploymentTax"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
-                    value={formik.values.promotionPosition}
+                    value={formik.values.previousEmploymentTax}
                     className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -743,20 +857,20 @@ export const Section8: React.FC = () => {
                   className="relative pt-4 flex flex-col items-start 
                    justify-center gap-1"
                 >
-                  {formik.errors.promotionPosition &&
-                    formik.touched.promotionPosition && (
+                  {formik.errors.previousEmploymentNet &&
+                    formik.touched.previousEmploymentNet && (
                       <p className="absolute top-0 left-0 text-sm text-red-600">
-                        {formik.errors.promotionPosition}
+                        {formik.errors.previousEmploymentNet}
                       </p>
                     )}
                   <label className="text-sm">Net</label>
                   <input
                     type="number"
                     required
-                    id="promotionPosition"
+                    id="previousEmploymentNet"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
-                    value={formik.values.promotionPosition}
+                    value={formik.values.previousEmploymentNet}
                     className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -771,10 +885,10 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.currentPosition &&
-                  formik.touched.currentPosition && (
+                {formik.errors.previousEmploymentNameAndAddressOfEmployer &&
+                  formik.touched.previousEmploymentNameAndAddressOfEmployer && (
                     <p className="absolute top-0 left-0 text-sm text-red-600">
-                      {formik.errors.currentPosition}
+                      {formik.errors.previousEmploymentNameAndAddressOfEmployer}
                     </p>
                   )}
                 <label className="text-sm">
@@ -783,10 +897,12 @@ export const Section8: React.FC = () => {
                 <input
                   type="text"
                   required
-                  id="currentPosition"
+                  id="previousEmploymentNameAndAddressOfEmployer"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.currentPosition}
+                  value={
+                    formik.values.previousEmploymentNameAndAddressOfEmployer
+                  }
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -796,20 +912,20 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.promotionPosition &&
-                  formik.touched.promotionPosition && (
+                {formik.errors.previousEmploymentBusinessType &&
+                  formik.touched.previousEmploymentBusinessType && (
                     <p className="absolute top-0 left-0 text-sm text-red-600">
-                      {formik.errors.promotionPosition}
+                      {formik.errors.previousEmploymentBusinessType}
                     </p>
                   )}
                 <label className="text-sm">Type of business</label>
                 <input
                   type="text"
                   required
-                  id="promotionPosition"
+                  id="previousEmploymentBusinessType"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.promotionPosition}
+                  value={formik.values.previousEmploymentBusinessType}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full"
@@ -822,19 +938,19 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.promotionPosition &&
-                  formik.touched.promotionPosition && (
+                {formik.errors.previousEmploymentDutyDescription &&
+                  formik.touched.previousEmploymentDutyDescription && (
                     <p className="absolute top-0 left-0 text-sm text-red-600">
-                      {formik.errors.promotionPosition}
+                      {formik.errors.previousEmploymentDutyDescription}
                     </p>
                   )}
                 <label className="text-sm">Description of your duties</label>
                 <textarea
                   required
-                  id="promotionPosition"
+                  id="previousEmploymentDutyDescription"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.promotionPosition}
+                  value={formik.values.previousEmploymentDutyDescription}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full h-28"
@@ -844,10 +960,10 @@ export const Section8: React.FC = () => {
                 className="relative pt-4 flex flex-col items-start 
                  justify-center gap-1"
               >
-                {formik.errors.promotionPosition &&
-                  formik.touched.promotionPosition && (
+                {formik.errors.previousEmploymentReasonsForLeaving &&
+                  formik.touched.previousEmploymentReasonsForLeaving && (
                     <p className="absolute top-0 left-0 text-sm text-red-600">
-                      {formik.errors.promotionPosition}
+                      {formik.errors.previousEmploymentReasonsForLeaving}
                     </p>
                   )}
                 <label className="text-sm">
@@ -855,10 +971,10 @@ export const Section8: React.FC = () => {
                 </label>
                 <textarea
                   required
-                  id="promotionPosition"
+                  id="previousEmploymentReasonsForLeaving"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.promotionPosition}
+                  value={formik.values.previousEmploymentReasonsForLeaving}
                   className="p-2 outline-none rounded border-[2px]
                   border-gray-500 focus:border-[2px] focus:border-primaryLight
                   transition-all text-sm w-full h-28"
