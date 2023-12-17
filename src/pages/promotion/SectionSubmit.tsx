@@ -24,7 +24,7 @@ export const SectionSubmit: React.FC = () => {
   const dispatch: any = useDispatch();
 
   const { prevPageHandler, nextPageHandler } = useProgress({
-    page: 8,
+    page: 10,
     section: "submit",
     nextPageURL: "/promotion/section-submit",
     prevPageURL: "/promotion/section9",
