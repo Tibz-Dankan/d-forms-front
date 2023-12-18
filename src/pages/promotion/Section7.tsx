@@ -58,7 +58,7 @@ export const Section7: React.FC = () => {
   const formik = useFormik({
     initialValues: getInitialValues(),
     validationSchema: Yup.object({
-      currentResearchProjects: Yup.string()
+      currentResearchInterests: Yup.string()
         .max(1000)
         .required("Current research project statement is required"),
       ongoingResearchProjects: Yup.string()

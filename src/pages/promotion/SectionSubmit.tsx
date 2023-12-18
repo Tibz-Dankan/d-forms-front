@@ -68,9 +68,7 @@ export const SectionSubmit: React.FC = () => {
       }, 5000);
     }
 
-    mutate({
-      data: stringifiedData,
-    });
+    mutate({ data: stringifiedData });
   };
 
   return (
