@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@material-tailwind/react": "^2.1.5",
-    "@ramonak/react-progress-bar": "^5.1.1",
     "@reduxjs/toolkit": "^2.0.1",
     "@tanstack/react-query": "v4.29.17",
     "formik": "^2.4.5",
