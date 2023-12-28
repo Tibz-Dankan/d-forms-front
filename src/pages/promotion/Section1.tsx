@@ -20,7 +20,7 @@ import { useProgress } from "../../hooks/useProgress";
 type TInitialValues = {
   receiveDate: string;
   receiveTime: string;
-  receiveDateTime: string;
+  // receiveDateTime: string;
   familyname: string;
   firstname: string;
   maidenname: string;
@@ -48,7 +48,7 @@ export const Section1: React.FC = () => {
   const initialValues: TInitialValues = {
     receiveDate: "",
     receiveTime: "",
-    receiveDateTime: "",
+    // receiveDateTime: "",
     familyname: "",
     firstname: "",
     maidenname: "",

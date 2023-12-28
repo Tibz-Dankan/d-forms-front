@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-// import ProgressBar from "@ramonak/react-progress-bar";
 import { Progress } from "@material-tailwind/react";
 
 interface ProgressbarProps {
