@@ -3,12 +3,13 @@ import { useSearchParams } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import { Progressbar } from "../UI/shared/Progressbar";
 import { Header } from "./Header";
+import { Footer } from "./Footer";
 
 interface FormLayoutProps {
   headerTitle: ReactNode;
   headerTitleClassName?: string;
   children: ReactNode;
-  footer: ReactNode;
+  footer?: ReactNode;
   section: string;
   totalNumPages: number;
 }
@@ -77,7 +78,10 @@ export const FormLayout: React.FC<FormLayoutProps> = (props) => {
         {/* main content section */}
         <div className="w-full">{props.children}</div>
         {/* footer section */}
-        <div>{props.footer}</div>
+        {/* <div>{props.footer}</div> */}
+        <div className="w-full">
+          <Footer />
+        </div>
       </div>
     </Fragment>
   );
